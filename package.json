@@ -1,6 +1,7 @@
 {
-  "name": "meta-cup",
+  "name": "mind-quest",
   "version": "0.1.0",
+  "description": "마인드 퀘스트: 내면의 나침반 (MindQuest: Inner Compass) - 머드(MUD) 텍스트 RPG 소설형 기질 및 적성 분석 인터랙티브 웹 서비스",
   "private": true,
   "scripts": {
     "dev": "next dev",

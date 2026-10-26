@@ -1,27 +1,41 @@
-# MetaCup (메타컵) 🏆
+# 마인드 퀘스트: 내면의 나침반 (MindQuest: Inner Compass)
 
-> **JARVIS 메타인지 & 커리어 항로 발견 엔진**  
-> 토스(Toss) & 리니어(Linear) 스타일의 클린 미니멀 핀테크 / 벤토 그리드 UI로 30초 만에 분석하는 실전 메타인지 진단 웹 애플리케이션
-
-[![Deploy with Vercel](https://vercel.com/button)](https://vercel.com/new/clone?repository-url=https%3A%2F%2Fgithub.com%2FSteadyBuilder%2Fmetacup)
+> **MUD 텍스트 RPG 소설형 기질 및 적성 분석 인터랙티브 웹 서비스**  
+> 진부한 객관식 설문지를 탈피하여, 1인칭 독백과 분기형 서사 속에서 나만의 내면 나침반을 발견합니다.
 
 ---
 
-## ✨ 핵심 기능 (Features)
-- **16라운드 스피드 토너먼트**: 3초 직관 타이머 및 방향키(`←` / `→`) 단축키 지원
-- **화이트/블루 JARVIS 코파일럿**: 라운드별 실시간 딜레마 해설 및 최종 총평 브리핑
-- **주관식 몰입/스트레스 보정**: 2개의 집중 주관식 문항 & 원클릭 추천 칩
-- **5차원 메타인지 레이더 (Recharts)**: 전략적 사고, 집중 실행력, 창의적 혁신, 협업 시너지, 회복 탄력성
-- **8대 메타인지 아키타입**: 전략적 아키텍트, 초고속 빌더, 개척자, 시너지 오케스트레이터 등
-- **Top 3 커리어 항로 & Next Action Item**: 실천형 액션 플랜 및 추천 기술 스택 태그
-- **Canvas-Confetti & Web Share API**: 결과 언락 폭죽 연출 및 모바일 원클릭 공유
+## 🧭 프로젝트 개요 (Overview)
+- **공식 명칭**: 마인드 퀘스트: 내면의 나침반 (MindQuest: Inner Compass)
+- **장르**: MUD 텍스트 RPG 소설형 기질 & 적성 분석 웹 서비스
+- **대상 타깃**: 소설을 읽을 수 있는 전 연령대
+
+### 용어 체계
+* **[시련의 장 (Trials)]**: 서사 속 갈등과 선택의 분기점
+* **[여정의 지도 (Journey Map)]**: 시련의 분기 트리 및 되감기(Rewind) 네비게이터
+* **[여정의 연대기 (Chronicle of Journey)]**: 종합 분석 결과 및 최종 마스터 아키타입 리포트
+
+---
+
+## ⚔️ 핵심 인터랙션 3종
+1. 🔍 **[속삭임]**: 선택지 탭 시 결단이 불러올 **기회비용 (얻는 가치 vs 치를 대가)** 1줄 팝업
+2. ⏳ **[모래시계]**: **10초 카운트다운**과 은은한 **심장박동 펄스**로 무의식적 직관 유도
+3. ⏪ **[되감기]**: 상단 '여정의 지도'에서 언제든 직전 시련으로 복귀하여 다른 갈림길 탐색
+
+---
+
+## 🛡️ 사용자 프로필 연계 (Sir's Profile)
+- **STEP 1 [근본 기질]**: [흔들리지 않는 요새 구축가 (The Pragmatic Architect)]
+- **STEP 2 [업무 스타일 & 문제해결 패턴]**: [냉철한 생존선을 긋는 기동 지략가 (Pragmatic Line-Keeper)]
+- **STEP 3 [조직 내 갈등 해결 및 소통 패턴]**: 신규 플레이어블 MUD 서사 퀘스트
 
 ---
 
 ## 🛠️ 기술 스택 (Tech Stack)
-- **Framework**: Next.js 16 (App Router), React 19, TypeScript
-- **Styling**: Tailwind CSS v4, Lucide React
-- **Animations**: Framer Motion, Canvas Confetti
-- **State**: Zustand (LocalStorage 영속화)
-- **Charts**: Recharts (Radar Chart, ResponsiveContainer)
-- **AI Engine**: Google Gemini API (`@google/genai`) with Heuristic Fallback
+- **Framework**: Next.js 16 (App Router)
+- **Language**: TypeScript
+- **Styling**: Tailwind CSS v4
+- **State Management**: Zustand (Persist)
+- **Motion & FX**: Framer Motion
+- **Icons**: Lucide Icons
+- **Charts**: Recharts
