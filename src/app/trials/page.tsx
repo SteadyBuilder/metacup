@@ -49,8 +49,11 @@ export default function TrialsPage() {
     selectOption(option);
   };
 
+  // 새로고침 또는 시련 전환 시 누락 없는 FX 연출 보장
+  const effectiveFx = activeFx !== 'none' ? activeFx : (trial?.fx || 'none');
+
   return (
-    <FxOverlay fx={activeFx}>
+    <FxOverlay fx={effectiveFx}>
       <div className="flex-1 flex flex-col justify-start max-w-5xl mx-auto px-4 sm:px-6 py-3 sm:py-5 w-full">
         {/* Top Control Bar: Step Info & 3 Helper UIs */}
         <div className="flex items-center justify-between gap-3 sm:gap-4 mb-3 sm:mb-4">

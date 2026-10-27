@@ -10,18 +10,36 @@ interface FxOverlayProps {
 }
 
 export const FxOverlay: React.FC<FxOverlayProps> = ({ fx, children }) => {
-  // Shake animation configuration
+  // Shake animation configuration (지진 및 천장 붕괴의 역동적 진동)
   const shakeVariants = {
     shake: {
-      x: [0, -6, 6, -4, 4, -2, 2, 0],
-      y: [0, 2, -2, 2, -2, 0],
-      transition: { duration: 0.5, ease: 'easeInOut' as const }
+      x: [0, -12, 12, -8, 8, -5, 5, -2, 2, 0],
+      y: [0, 5, -5, 4, -4, 2, -2, 0],
+      transition: {
+        duration: 0.65,
+        ease: 'easeInOut' as const,
+        repeat: 2,
+        repeatDelay: 0.12
+      }
     },
     none: { x: 0, y: 0 }
   };
 
   return (
     <div className="relative w-full min-h-screen overflow-hidden">
+      {/* Shake (Collapse & Tremor) Dust Atmosphere Overlay */}
+      <AnimatePresence>
+        {fx === 'shake' && (
+          <motion.div
+            initial={{ opacity: 0 }}
+            animate={{ opacity: [0.15, 0.45, 0.2, 0.35, 0] }}
+            exit={{ opacity: 0 }}
+            transition={{ duration: 1.8, ease: 'easeOut' }}
+            className="pointer-events-none fixed inset-0 z-30 shadow-[inset_0_0_100px_rgba(245,158,11,0.22)] border border-amber-500/25"
+          />
+        )}
+      </AnimatePresence>
+
       {/* Warning Vignette Overlay */}
       <AnimatePresence>
         {fx === 'warning' && (

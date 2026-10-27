@@ -190,7 +190,7 @@ export const STEP1_TRIALS: Record<string, Trial> = {
     chapterTitle: '제6막: 무너지는 천장과 톱니 함정',
     backgroundScene:
       '제단의 보물을 챙겨 들자마자 쿵 하는 굉음과 함께 동굴 천장이 흔들리며 입구가 무너지기 시작합니다! 탈출할 수 있는 시간은 단 수십 초. 바닥에는 복잡한 톱니 함정이 작동하기 시작했습니다.',
-    fx: 'warning',
+    fx: 'shake',
     options: [
       {
         id: 'A',
