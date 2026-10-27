@@ -11,31 +11,35 @@ import {
   ArrowRight,
   Sparkles,
   Compass,
-  Scroll
+  Scroll,
+  Cpu
 } from 'lucide-react';
-import { STEP1_PROFILE } from '@/data/story/step1_origin';
-import { STEP2_PROFILE } from '@/data/story/step2_tactics';
+import { useQuestStore } from '@/store/useQuestStore';
+import { synthesizeChronicle } from '@/data/story/archetypesMaster';
 
 export default function ProfileArchivePage() {
+  const { chronicleResult, scores, resetQuest } = useQuestStore();
+  const result = chronicleResult || synthesizeChronicle(scores);
+
   return (
     <div className="flex-1 max-w-4xl mx-auto px-4 sm:px-6 py-10 sm:py-14 w-full">
       {/* Header */}
       <div className="text-center mb-10">
-        <div className="inline-flex items-center gap-2 px-3.5 py-1.5 rounded-full bg-amber-500/10 border border-amber-500/30 text-amber-300 text-xs font-semibold mb-4">
-          <Award className="w-3.5 h-3.5" />
-          <span>Sir의 기 분석 완료 프로필 아카이브</span>
+        <div className="inline-flex items-center gap-2 px-3.5 py-1.5 rounded-full bg-cyan-950/80 border border-cyan-500/40 text-cyan-300 text-xs font-semibold mb-4">
+          <Compass className="w-3.5 h-3.5" />
+          <span>내면의 나침반 프로필 아카이브</span>
         </div>
 
         <h1 className="text-2xl sm:text-4xl font-extrabold text-slate-100 font-serif tracking-tight">
-          내면의 나침반 : 기질 & 지략 마스터 프로필
+          {result.grandTitle}
         </h1>
-        <p className="mt-3 text-sm text-slate-400 font-light max-w-xl mx-auto">
-          STEP 1의 근본 기질과 STEP 2의 문제해결 패턴이 확정되어 안전하게 동기화되어 있습니다.
+        <p className="mt-3 text-sm text-cyan-300 font-serif italic max-w-xl mx-auto">
+          &ldquo;{result.grandEpithet}&rdquo;
         </p>
       </div>
 
       <div className="space-y-8 mb-10">
-        {/* STEP 1 Pillar */}
+        {/* STEP 1 Pillar: 근본 기질 */}
         <motion.div
           initial={{ opacity: 0, y: 15 }}
           animate={{ opacity: 1, y: 0 }}
@@ -45,20 +49,20 @@ export default function ProfileArchivePage() {
             <div className="flex items-center gap-2 text-cyan-400">
               <Shield className="w-4 h-4" />
               <span className="text-xs font-mono font-bold uppercase tracking-wider">
-                {STEP1_PROFILE.stepName}
+                {result.step1.stepName}
               </span>
             </div>
             <span className="text-xs font-mono text-cyan-300/80">
-              {STEP1_PROFILE.englishTitle}
+              {result.step1.englishTitle}
             </span>
           </div>
 
           <h2 className="text-xl sm:text-2xl font-bold text-slate-100 font-serif mb-3">
-            [{STEP1_PROFILE.archetypeTitle}]
+            [{result.step1.archetypeTitle}]
           </h2>
 
           <p className="text-sm sm:text-base text-slate-300 leading-relaxed font-light mb-6">
-            {STEP1_PROFILE.summary}
+            {result.step1.summary}
           </p>
 
           <div className="pt-4 border-t border-slate-800/80">
@@ -66,7 +70,7 @@ export default function ProfileArchivePage() {
               핵심 기질 특성 (Core Traits)
             </h4>
             <div className="grid grid-cols-1 sm:grid-cols-2 gap-2.5">
-              {STEP1_PROFILE.coreTraits.map((trait, idx) => (
+              {result.step1.coreTraits.map((trait, idx) => (
                 <div
                   key={idx}
                   className="flex items-center gap-2 p-2.5 rounded-xl bg-slate-950 border border-slate-800/80 text-xs text-slate-200"
@@ -79,7 +83,7 @@ export default function ProfileArchivePage() {
           </div>
         </motion.div>
 
-        {/* STEP 2 Pillar */}
+        {/* STEP 2 Pillar: 몰입 취향 */}
         <motion.div
           initial={{ opacity: 0, y: 15 }}
           animate={{ opacity: 1, y: 0 }}
@@ -90,28 +94,28 @@ export default function ProfileArchivePage() {
             <div className="flex items-center gap-2 text-amber-400">
               <Zap className="w-4 h-4" />
               <span className="text-xs font-mono font-bold uppercase tracking-wider">
-                {STEP2_PROFILE.stepName}
+                {result.step2.stepName}
               </span>
             </div>
             <span className="text-xs font-mono text-amber-300/80">
-              {STEP2_PROFILE.englishTitle}
+              {result.step2.englishTitle}
             </span>
           </div>
 
           <h2 className="text-xl sm:text-2xl font-bold text-slate-100 font-serif mb-3">
-            [{STEP2_PROFILE.archetypeTitle}]
+            [{result.step2.archetypeTitle}]
           </h2>
 
           <p className="text-sm sm:text-base text-slate-300 leading-relaxed font-light mb-6">
-            {STEP2_PROFILE.summary}
+            {result.step2.summary}
           </p>
 
           <div className="pt-4 border-t border-slate-800/80">
             <h4 className="text-xs font-bold text-slate-300 uppercase tracking-wider mb-3">
-              핵심 전술 특성 (Tactical Traits)
+              몰입 및 동기 특성 (Drive Traits)
             </h4>
             <div className="grid grid-cols-1 sm:grid-cols-2 gap-2.5">
-              {STEP2_PROFILE.coreTraits.map((trait, idx) => (
+              {result.step2.coreTraits.map((trait, idx) => (
                 <div
                   key={idx}
                   className="flex items-center gap-2 p-2.5 rounded-xl bg-slate-950 border border-slate-800/80 text-xs text-slate-200"
@@ -123,24 +127,73 @@ export default function ProfileArchivePage() {
             </div>
           </div>
         </motion.div>
+
+        {/* STEP 3 Pillar: AI 시대 적합 업무 영역 */}
+        <motion.div
+          initial={{ opacity: 0, y: 15 }}
+          animate={{ opacity: 1, y: 0 }}
+          transition={{ delay: 0.2 }}
+          className="rounded-3xl bg-slate-900 border border-emerald-500/40 p-6 sm:p-8 shadow-xl"
+        >
+          <div className="flex items-center justify-between pb-4 mb-5 border-b border-slate-800">
+            <div className="flex items-center gap-2 text-emerald-400">
+              <Cpu className="w-4 h-4" />
+              <span className="text-xs font-mono font-bold uppercase tracking-wider">
+                {result.step3.stepName}
+              </span>
+            </div>
+            <span className="text-xs font-mono text-emerald-300/80">
+              {result.step3.englishTitle}
+            </span>
+          </div>
+
+          <h2 className="text-xl sm:text-2xl font-bold text-slate-100 font-serif mb-3">
+            [{result.step3.archetypeTitle}]
+          </h2>
+
+          <p className="text-sm sm:text-base text-slate-300 leading-relaxed font-light mb-6">
+            {result.step3.summary}
+          </p>
+
+          <div className="pt-4 border-t border-slate-800/80">
+            <h4 className="text-xs font-bold text-slate-300 uppercase tracking-wider mb-3">
+              추천 업무 카테고리
+            </h4>
+            <div className="grid grid-cols-1 gap-2.5">
+              {result.aiWorkDomains?.map((domain, idx) => (
+                <div
+                  key={idx}
+                  className="p-3 rounded-xl bg-slate-950 border border-slate-800 text-xs text-slate-200 flex items-start gap-2"
+                >
+                  <span className="text-emerald-400 font-bold font-mono">#{idx + 1}</span>
+                  <div>
+                    <span className="font-semibold text-emerald-300">{domain.category}: </span>
+                    <span className="text-slate-300">{domain.fitReason}</span>
+                  </div>
+                </div>
+              ))}
+            </div>
+          </div>
+        </motion.div>
       </div>
 
-      {/* Enter STEP 3 CTA */}
-      <div className="p-6 rounded-2xl bg-gradient-to-r from-slate-900 via-cyan-950/30 to-slate-900 border border-cyan-500/40 text-center">
-        <h3 className="text-lg font-bold text-slate-100 font-serif mb-2">
-          마지막 퍼즐 : [STEP 3 조직 내 갈등 해결 및 소통 패턴]
-        </h3>
-        <p className="text-xs sm:text-sm text-slate-300 font-light mb-5 max-w-xl mx-auto">
-          두 개의 단단한 축 위에, 조직과 사람을 살리는 연대의 법칙을 더해 최종 [여정의 연대기]를 완성하십시오.
-        </p>
+      {/* Action Footer */}
+      <div className="flex flex-wrap items-center justify-center gap-4">
+        <Link
+          href="/chronicle"
+          className="flex items-center gap-2 px-6 py-3.5 rounded-2xl bg-cyan-600 hover:bg-cyan-500 text-slate-950 text-xs font-bold transition-all shadow-md"
+        >
+          <Compass className="w-4 h-4" />
+          <span>전체 연대기 결과 보기</span>
+        </Link>
 
         <Link
           href="/trials"
-          className="inline-flex items-center gap-2 px-6 py-3 rounded-xl bg-cyan-500 hover:bg-cyan-400 text-slate-950 font-bold text-xs sm:text-sm shadow-md transition-all hover:scale-105"
+          onClick={() => resetQuest()}
+          className="flex items-center gap-2 px-5 py-3.5 rounded-2xl bg-slate-800 hover:bg-slate-700 text-slate-200 text-xs font-semibold border border-slate-700 transition-all"
         >
-          <Scroll className="w-4 h-4" />
-          <span>시련의 장 (STEP 3) 입장하기</span>
-          <ArrowRight className="w-4 h-4" />
+          <Scroll className="w-4 h-4 text-amber-400" />
+          <span>시련 처음부터 다시 시작</span>
         </Link>
       </div>
     </div>

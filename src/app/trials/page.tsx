@@ -5,13 +5,14 @@ import { useRouter } from 'next/navigation';
 import { motion, AnimatePresence } from 'framer-motion';
 import { Compass, RotateCcw, Map, Sparkles, CheckCircle2 } from 'lucide-react';
 import { useQuestStore } from '@/store/useQuestStore';
-import { STEP3_TRIALS } from '@/data/story/step3_conflict';
+import { ALL_TRIALS } from '@/data/story/allTrials';
 import { FxOverlay } from '@/components/quest/FxOverlay';
 import { MudStoryRenderer } from '@/components/quest/MudStoryRenderer';
 import { MonologueCard } from '@/components/quest/MonologueCard';
 import { HourglassTimer } from '@/components/quest/HourglassTimer';
 import { WhisperModal } from '@/components/quest/WhisperModal';
 import { JourneyMapModal } from '@/components/quest/JourneyMapModal';
+import { StepUnlockModal } from '@/components/quest/StepUnlockModal';
 import { MonologueOption } from '@/types/quest';
 
 export default function TrialsPage() {
@@ -22,13 +23,15 @@ export default function TrialsPage() {
     selectOption,
     isCompleted,
     history,
-    rewindToPrevious
+    rewindToPrevious,
+    unlockModal,
+    proceedFromUnlock
   } = useQuestStore();
 
   const [isMapOpen, setIsMapOpen] = useState(false);
   const [lastReaction, setLastReaction] = useState<string | null>(null);
 
-  const trial = STEP3_TRIALS[currentTrialId] || STEP3_TRIALS['t3_1'];
+  const trial = ALL_TRIALS[currentTrialId] || ALL_TRIALS['t1_1'];
 
   // When quest completes, navigate to chronicle
   useEffect(() => {
@@ -98,33 +101,35 @@ export default function TrialsPage() {
         </div>
 
         {/* 1st Person Inner Monologue Choice Cards */}
-        <div>
-          <div className="flex items-center justify-between mb-3 px-1">
-            <span className="text-xs font-mono text-slate-400 uppercase tracking-wider">
-              내면의 결단 (1인칭 독백 선택지)
-            </span>
-            <span className="text-[11px] text-amber-400/90 font-mono">
-              💡 돋보기를 누르면 기회비용 [속삭임]이 들립니다
-            </span>
+        <div className="space-y-3 sm:space-y-4">
+          <div className="text-center text-xs font-mono text-slate-400 uppercase tracking-widest mb-1">
+            당신의 본능적인 결단을 선택하십시오
           </div>
 
-          <div className="grid grid-cols-1 md:grid-cols-2 gap-4">
-            <MonologueCard
-              option={trial.options[0]}
-              index={0}
-              onSelect={handleSelect}
-            />
-            <MonologueCard
-              option={trial.options[1]}
-              index={1}
-              onSelect={handleSelect}
-            />
+          <div className="grid grid-cols-1 gap-3 sm:gap-4">
+            {trial.options.map((opt, idx) => (
+              <MonologueCard
+                key={opt.id}
+                option={opt}
+                index={idx}
+                onSelect={() => handleSelect(opt)}
+              />
+            ))}
           </div>
         </div>
 
-        {/* Modals */}
+        {/* Whisper Modal */}
         <WhisperModal />
+
+        {/* Journey Map Modal */}
         <JourneyMapModal isOpen={isMapOpen} onClose={() => setIsMapOpen(false)} />
+
+        {/* Category Unlock Modal (자물쇠가 떨리며 떠오른 뒤 찰칵 해제) */}
+        <StepUnlockModal
+          isOpen={!!unlockModal?.isOpen}
+          unlockedStep={unlockModal?.unlockedStep || 2}
+          onProceed={proceedFromUnlock}
+        />
       </div>
     </FxOverlay>
   );

@@ -1,37 +1,37 @@
-import { Trial } from '@/types/quest';
+import { Trial, StepProfile, CompassDimension } from '@/types/quest';
 
 export const STEP3_TRIALS: Record<string, Trial> = {
   't3_1': {
     id: 't3_1',
     step: 3,
-    stepTitle: 'STEP 3: 조직 내 갈등 해결 및 소통의 장',
+    stepTitle: 'STEP 3: AI 시대 적합 업무 영역 (AI-Era Work Domain)',
     trialNumber: 1,
-    chapterTitle: '제1막: 모래 폭풍 속 갈라진 대열',
+    chapterTitle: '제1막: 지능의 날개를 단 나침반',
     backgroundScene:
-      '나흘째 이어진 모래 폭풍이 카라반의 천막을 찢을 듯 흔든다. 식량 창고 한구석에서 거친 고함이 터져 나왔다. 현장 지형에 밝은 고참 길잡이는 짐을 버리고 바위 굴로 숨자 소리치고, 규율을 중시하는 보급 대장은 짐을 버리는 자는 탈영으로 간주하겠다며 장검 손잡이에 손을 얹었다. 지친 대원들의 시선이 어둠 속 내게로 쏠린다.',
-    fx: 'warning',
+      '나의 근본 기질과 몰입 취향이 명확해진 순간, 시련의 무대는 현실의 거대한 패러다임 전환기인 ‘AI 시대의 교차로’로 이어진다. 수백 명의 코더와 기획자가 수개월 걸려 하던 일을, 이제 단 한 사람이 AI라는 거대한 지능 에이전트를 조율하며 해낼 수 있는 시대. 이 강력한 지능의 날개를 쥐었을 때, 내 본능이 가리키는 방향은 어디인가.',
+    fx: 'pulse',
     options: [
       {
         id: 'A',
-        text: '"두 사람의 감정싸움에 말려들 여유는 없다. 당장 필요한 물과 방한구만 각자 배낭에 챙기게 하고, 생존율이 가장 높은 바위 굴로 대열을 즉시 강제 이동시킨다."',
+        text: '"거대한 조직의 부품이 될 필요는 없다. AI를 나의 개발자이자 디자이너로 삼아, 내가 상상한 유용한 1인 서비스나 자동화 솔루션을 내 손으로 직접 빌드하고 론칭한다."',
         whisper: {
-          gain: '즉각적인 대열 안정과 인명 피해 최소화',
-          cost: '규율을 무시당한 보급 대장과의 누적된 감정적 반발'
+          gain: '독립적인 1인 프로덕트 메이커로서의 압도적 기동성과 창작 자율성',
+          cost: '기획부터 구현, 운영까지 혼자 감당해야 하는 오너십의 무게'
         },
-        weights: { execution: 3, strategic: 2, resilience: 2 },
+        weights: { execution: 3, strategic: 2 },
         nextTrialId: 't3_2A',
-        reactionText: '명령은 차갑고 정확했다. 지체할 틈 없이 대원들의 발걸음이 움직였다.'
+        reactionText: '머릿속의 아이디어가 즉시 손끝을 통해 작동하는 코드로 치환된다.'
       },
       {
         id: 'B',
-        text: '"칼을 뽑는 순간 모두가 파멸이다. 둘을 마주 앉혀 보급 대장이 지키려는 화물 목록 중 대체 불가능한 핵심만 선별하게 하고, 길잡이에게는 그 무게만큼의 우회로를 찾도록 합의점을 끌어낸다."',
+        text: '"단순한 기능 구현은 AI가 다 해준다. 나는 AI의 방대한 정보력을 지렛대 삼아, 사람들의 길을 밝히는 독보적인 인사이트 콘텐츠와 차별화된 지식 자산을 빚어낸다."',
         whisper: {
-          gain: '핵심 자산 보존 및 두 핵심 인력의 자존감 동시 수호',
-          cost: '합의 과정에서 소모되는 결정적 이동 골든타임 20분'
+          gain: '깊이 있는 지식 자산화와 강력한 퍼스널 브랜드 및 영향력',
+          cost: '끊임없이 새로운 트렌드와 본질을 사색해야 하는 지적 에너지'
         },
-        weights: { collaboration: 3, strategic: 2, creativity: 2 },
+        weights: { strategic: 3, creativity: 2 },
         nextTrialId: 't3_2B',
-        reactionText: '거친 숨소리 사이로 차분한 논리가 파고들었다. 두 사람의 턱 끝이 미세하게 떨렸다.'
+        reactionText: '수많은 정보의 조각들이 날카로운 통찰의 문장으로 재구성된다.'
       }
     ]
   },
@@ -39,34 +39,34 @@ export const STEP3_TRIALS: Record<string, Trial> = {
   't3_2A': {
     id: 't3_2A',
     step: 3,
-    stepTitle: 'STEP 3: 조직 내 갈등 해결 및 소통의 장',
+    stepTitle: 'STEP 3: AI 시대 적합 업무 영역 (AI-Era Work Domain)',
     trialNumber: 2,
-    chapterTitle: '제2막 (경로 α): 바위 굴의 침묵과 불만의 불씨',
+    chapterTitle: '제2막 (빌더): 내가 구축하고 싶은 현실의 가치',
     backgroundScene:
-      '강제 이동 끝에 가까스로 바위 굴에 도착했으나 굴 안의 공기는 얼음장보다 차갑다. 버려진 짐에 미련을 둔 젊은 대원 몇몇이 구석에서 수군거리고, 권위를 잃은 보급 대장은 모닥불에서 등을 돌린 채 침묵을 지킨다. 불신의 독기가 대열 전체로 은밀히 번져 나가고 있다.',
+      'AI 개발 에이전트와 페어 프로그래밍을 시작했다. 내가 풀고 싶은 현실 문제의 결이 구체화된다.',
     fx: 'none',
     options: [
       {
         id: 'A',
-        text: '"수군거림을 방치하면 대열이 와해된다. 모두가 듣는 자리에서 방금 내린 결단의 팩트와 생존 확률 수치를 가감 없이 공개하고, 불만이 있는 자는 지금 대열 앞에서 직접 말하도록 판을 깐다."',
+        text: '"사람들이 매일 반복하며 시간을 낭비하는 복잡한 수작업들(데이터 정리, 이메일, 보고서 등)을 n8n과 AI API로 연결해 원클릭으로 끝내는 지능형 자동화 파이프라인을 구축한다."',
         whisper: {
-          gain: '음습한 뒷말 원천 차단 및 투명한 현실 직시',
-          cost: '취약한 분위기 속 격한 공개 설전 발생 리스크'
+          gain: '명확한 비효율 제거와 B2B/개인 실무 효율성 극대화',
+          cost: '초기 API 및 데이터 연동 설계의 정밀성 요구'
         },
-        weights: { execution: 2, resilience: 3, strategic: 2 },
+        weights: { strategic: 3, execution: 2 },
         nextTrialId: 't3_3A',
-        reactionText: '장작불이 탁 소리를 내며 튀었다. 진실이 드러나자 숨죽인 침묵이 굴 안을 채웠다.'
+        reactionText: '수십 단계의 번거로운 작업이 단 하나의 버튼 뒤로 사라졌다.'
       },
       {
         id: 'B',
-        text: '"공개적인 압박은 반발만 키운다. 불만을 주도하는 대원과 보급 대장에게 따로 다가가 따뜻한 차를 건네며, 그들이 각자 느낀 상실감을 묵묵히 들어준 뒤 내일 새벽 정찰의 중책을 맡긴다."',
+        text: '"사람들이 일상에서 겪는 특정한 결핍이나 재미를 겨냥해, 직관적인 UI와 맞춤형 알고리즘을 갖춘 감도 높은 1인 마이크로 웹/앱 서비스를 빠르게 출시하고 테스트한다."',
         whisper: {
-          gain: '개별적 상처 봉합 및 실추된 자존감 회복을 통한 충성도 확보',
-          cost: '리더 개인의 극심한 감정적 에너지 소모와 시간 지체'
+          gain: '엔드 유저와의 직접 소통 및 빠른 제품-시장 적합성 검증',
+          cost: '지속적인 UI/UX 개선과 마케팅/유입 전략 수립'
         },
-        weights: { collaboration: 3, creativity: 2, strategic: 1 },
+        weights: { execution: 3, creativity: 2 },
         nextTrialId: 't3_3B',
-        reactionText: '따뜻한 온기가 굳었던 손가락을 풀었다. 보급 대장의 눈빛에 희미한 안도가 스쳤다.'
+        reactionText: '눈앞에 완성된 서비스 프로토타입이 살아 숨 쉬기 시작했다.'
       }
     ]
   },
@@ -74,34 +74,34 @@ export const STEP3_TRIALS: Record<string, Trial> = {
   't3_2B': {
     id: 't3_2B',
     step: 3,
-    stepTitle: 'STEP 3: 조직 내 갈등 해결 및 소통의 장',
+    stepTitle: 'STEP 3: AI 시대 적합 업무 영역 (AI-Era Work Domain)',
     trialNumber: 2,
-    chapterTitle: '제2막 (경로 β): 오아시스의 배급선과 엇갈린 공정성',
+    chapterTitle: '제2막 (크리에이터): 지식과 관계의 지향점',
     backgroundScene:
-      '극적인 합의로 핵심 화물을 지킨 채 마침내 숨겨진 오아시스에 당도했다. 그러나 수원의 수량이 예상의 절반에 불과하다. 부상자를 먼저 먹여야 한다는 길잡이의 주장과, 내일 수색을 나갈 최전방 정찰병들에게 물을 몰아주어야 한다는 보급 대장의 주장이 다시 팽팽하게 맞부딪힌다.',
+      'AI를 활용해 정보의 바다를 탐색한다. 기계가 흉내 낼 수 없는 나만의 차별화된 가치가 드러난다.',
     fx: 'pulse',
     options: [
       {
         id: 'A',
-        text: '"기준이 흔들리면 조직이 무너진다. 카라반의 최초 존속 헌장에 따라 전 대원에게 1인당 최소 생존 수량만을 균등하게 배분하고, 남은 잉여 수량 20%는 내일의 돌발 사태를 위해 철저히 봉인한다."',
+        text: '"쏟아지는 AI 정보의 홍수 속에서 핵심 원리와 노하우만을 날카롭게 큐레이션하고, 초보자도 쉽게 따라 할 수 있는 고품질 지식 아카이브와 가이드북을 만든다."',
         whisper: {
-          gain: '누구도 반박할 수 없는 절대적 공정성과 비상 비축분 확보',
-          cost: '정찰조의 사기 저하와 중상자의 회복 지연'
+          gain: '높은 신뢰도의 전문 큐레이터로서의 입지와 콘텐츠 자산화',
+          cost: '지속적인 검증과 리서치에 투입되는 시간'
         },
-        weights: { strategic: 3, execution: 2, resilience: 2 },
-        nextTrialId: 't3_3B',
-        reactionText: '계량 컵의 눈금이 정확히 그어졌다. 누구도 특혜를 받지 못했으나 누구도 배제되지 않았다.'
+        weights: { strategic: 3, resilience: 2 },
+        nextTrialId: 't3_3C',
+        reactionText: '안개 같던 정보들이 한눈에 꿰뚫어 볼 수 있는 지도 형태로 정돈되었다.'
       },
       {
         id: 'B',
-        text: '"지금은 평시가 아닌 전시 상태다. 내일 길을 뚫지 못하면 부상자도 모두 죽는다. 상황의 비정함을 솔직히 설명하고, 정찰조에 추가 배급을 집행하되 부상자 간호는 내가 직접 밤을 새워 분담한다."',
+        text: '"AI가 고도화될수록 사람들은 진정성 있는 인간적 유대와 멘토를 갈망한다. AI 도구를 손에 쥔 사람들을 모아 함께 학습하고 자극을 나누는 하이브리드 커뮤니티를 만든다."',
         whisper: {
-          gain: '임무 돌파 확률 극대화 및 솔선수범을 통한 불만 잠재우기',
-          cost: '약자 보호 원칙의 일시적 훼손과 리더의 육체적 한계 봉착'
+          gain: '대체 불가능한 강력한 인간적 신뢰와 충성도 높은 네트워크',
+          cost: '커뮤니티 내 다양한 사람들과의 적극적인 교류와 케어'
         },
-        weights: { execution: 3, resilience: 3, creativity: 1 },
-        nextTrialId: 't3_3C',
-        reactionText: '물통이 정찰조의 손으로 건네졌다. 부상자의 천막으로 향하는 내 발걸음은 무거웠으나 흔들리지 않았다.'
+        weights: { collaboration: 3, creativity: 2 },
+        nextTrialId: 't3_3D',
+        reactionText: '차가운 화면 너머로 따스한 온기와 소속감이 피어오른다.'
       }
     ]
   },
@@ -109,34 +109,28 @@ export const STEP3_TRIALS: Record<string, Trial> = {
   't3_3A': {
     id: 't3_3A',
     step: 3,
-    stepTitle: 'STEP 3: 조직 내 갈등 해결 및 소통의 장',
+    stepTitle: 'STEP 3: AI 시대 적합 업무 영역 (AI-Era Work Domain)',
     trialNumber: 3,
-    chapterTitle: '제3막: 침묵하는 이탈자의 그림자',
+    chapterTitle: '제3막: AI 시대 나의 독립 선언',
     backgroundScene:
-      '한밤중, 망을 보던 정찰병이 천막 뒤에서 몰래 무전 신호를 외부로 보내려던 베테랑 대원을 붙잡았다. 그는 사막 도적단과 내통한 것이 아니라, 본부의 무리한 강행 작전으로 카라반이 전멸할까 두려워 본가에 철수를 호소하는 구조 신호를 보내려 했다고 눈물로 읍소한다. 대원들은 그를 배신자로 처단하라며 살기를 띤다.',
-    fx: 'warning',
+      '모든 시련의 관문을 통과했다. 나만의 기질과 취향, 그리고 AI 시대의 도구가 하나로 맞물려 최종적인 항로를 가리킨다.',
+    fx: 'pulse',
     options: [
       {
         id: 'A',
-        text: '"사적 감정이 아무리 애절해도 명령 체계를 교란한 행위는 용납할 수 없다. 즉시 무전기를 압수하고 지휘권을 박탈하여 격리하되, 처벌은 임무 완수 후 본부의 공정한 심판에 넘긴다."',
-        whisper: {
-          gain: '조직 규율의 엄격한 수호 및 군중의 사적 제재(린치) 방지',
-          cost: '대원의 깊은 절망과 그를 동정하던 동료들의 냉랭한 심리적 위축'
-        },
-        weights: { strategic: 3, execution: 2, resilience: 2 },
-        nextTrialId: 't3_4',
-        reactionText: '철제 수갑이 채워지는 소리가 정적을 깼다. 규율은 지켜졌고 폭풍은 한 고비를 넘겼다.'
+        text: '"나는 AI 에이전트 군단을 총괄하는 1인 시스템 아키텍트다. 불필요한 인력 낭비 없이 혼자서도 기업 수준의 정교한 자동화와 백엔드를 완성하는 워크플로우 마스터가 된다."',
+        whisper: { gain: '1인 기업의 극대화된 레버리지와 고수익성', cost: '지속적인 최신 AI 툴 스택 학습' },
+        weights: { strategic: 3, execution: 2 },
+        nextTrialId: 'CHRONICLE',
+        reactionText: '나만의 AI 자동화 제국이 빈틈없이 가동되기 시작했다.'
       },
       {
         id: 'B',
-        text: '"그의 공포는 그만의 것이 아니다. 대원들을 물리고 단둘이 마주 앉아 그가 본 사막의 징조와 두려움의 실체를 캐묻고, 그의 기술을 역이용하여 본부가 아닌 우리 카라반만의 안전 비상망을 재설계하게 한다."',
-        whisper: {
-          gain: '잠재적 내부 위협을 핵심 방어 자산으로 극적 반전 전환',
-          cost: '배신 미수자에게 다시 기술을 맡기는 데 따르는 잔존 리스크'
-        },
-        weights: { creativity: 3, collaboration: 3, strategic: 2 },
-        nextTrialId: 't3_4',
-        reactionText: '떨리던 그의 손이 배선도를 다시 쥐었다. 공포는 사명감으로 형태를 바꾸기 시작했다.'
+        text: '"나는 실제 사람들의 일과 삶을 편하게 해주는 현실적인 솔루셔니스트다. 현장의 복잡한 요구사항을 경청하고 AI를 결합해 가장 실용적인 해답을 즉각 선물한다."',
+        whisper: { gain: '확실한 고객 수요와 실전 컨설팅/해결력', cost: '다양한 실무 현장의 가변성 대응' },
+        weights: { execution: 3, collaboration: 2 },
+        nextTrialId: 'CHRONICLE',
+        reactionText: '문제를 겪던 이들의 얼굴에 안도와 미소가 번졌다.'
       }
     ]
   },
@@ -144,34 +138,28 @@ export const STEP3_TRIALS: Record<string, Trial> = {
   't3_3B': {
     id: 't3_3B',
     step: 3,
-    stepTitle: 'STEP 3: 조직 내 갈등 해결 및 소통의 장',
+    stepTitle: 'STEP 3: AI 시대 적합 업무 영역 (AI-Era Work Domain)',
     trialNumber: 3,
-    chapterTitle: '제3막: 무너진 성문 앞의 위장된 신호',
+    chapterTitle: '제3막: 1인 프로덕트 메이커의 도약',
     backgroundScene:
-      '목적지 요새의 외곽 성문이 눈앞에 보이지만 성벽의 깃발이 불길하게 찢겨 있다. 망루에서는 아군의 암호 신호가 깜빡이지만, 관찰력이 뛰어난 길잡이는 신호의 주기가 미세하게 어긋나며 매복의 냄새가 난다고 경고한다. 반면 통신관은 아군이 고립되어 보내는 SOS가 확실하다며 당장 돌입해야 한다고 고집한다.',
-    fx: 'shake',
+      '서비스의 첫 번째 릴리즈 버전이 배포 준비를 마쳤다. AI 시대에 펼쳐질 나의 무대를 확인한다.',
+    fx: 'pulse',
     options: [
       {
         id: 'A',
-        text: '"미세한 결함이라도 의심이 확인되기 전엔 한 걸음도 전진하지 않는다. 본대를 바위 뒤에 매복시키고, 연막과 무인 수레를 앞세운 가짜 진입으로 적의 사격 반응을 먼저 유도해 진위를 파악한다."',
-        whisper: {
-          gain: '함정 돌입 시 발생할 괴멸적 피해의 선제적 차단',
-          cost: '실제 아군 고립 상황일 경우 구조 지연으로 인한 희생'
-        },
-        weights: { strategic: 3, execution: 3, resilience: 2 },
-        nextTrialId: 't3_4',
-        reactionText: '수레가 모래를 가르며 굴러갔다. 잠시 후 성벽 위에서 날카로운 화살 비가 쏟아졌다.'
+        text: '"작지만 날카로운 마이크로 SaaS와 버티컬 서비스를 연속으로 만들어내는 솔로프리너(Solopreneur). 실패를 두려워하지 않고 아이디어를 빠르게 시장에 던져 검증하는 메이커가 된다."',
+        whisper: { gain: '독립적인 수익 파이프라인과 빠른 제품 반복 주기', cost: '초기 유저 획득을 위한 마케팅 시도' },
+        weights: { execution: 3, creativity: 2 },
+        nextTrialId: 'CHRONICLE',
+        reactionText: '하나의 서비스가 전 세계 웹 위로 힘차게 닻을 올렸다.'
       },
       {
         id: 'B',
-        text: '"아군일 가능성을 0으로 둘 수는 없다. 대열을 둘로 나누어 내가 이끄는 최소 정예 기동조가 측면 수로로 잠입해 내부를 확인하고, 본대는 길잡이의 지휘 아래 즉시 퇴각 가능한 거리를 유지한다."',
-        whisper: {
-          gain: '아군 구조 가능성 유지와 본대 전멸 위험의 완벽한 분리',
-          cost: '잠입 정예조가 짊어지는 극단적인 생사의 갈림길'
-        },
-        weights: { execution: 3, collaboration: 2, creativity: 2 },
-        nextTrialId: 't3_4',
-        reactionText: '어깨를 두드리며 역할을 나눴다. 각자의 위치에서 눈빛 하나로 신뢰를 확인했다.'
+        text: '"단순한 도구를 넘어 사용자에게 감동과 영감을 주는 아름다운 디지털 경험 디렉터. 기술과 예술, AI의 장점을 절묘하게 버무려 대체 불가능한 시각/체험형 프로덕트를 선보인다."',
+        whisper: { gain: '독보적인 브랜드 가치와 팬덤 형성', cost: '디자인과 완성도에 대한 치열한 고심' },
+        weights: { creativity: 3, execution: 2 },
+        nextTrialId: 'CHRONICLE',
+        reactionText: '보는 순간 마음을 사로잡는 매혹적인 인터페이스가 완성되었다.'
       }
     ]
   },
@@ -179,70 +167,122 @@ export const STEP3_TRIALS: Record<string, Trial> = {
   't3_3C': {
     id: 't3_3C',
     step: 3,
-    stepTitle: 'STEP 3: 조직 내 갈등 해결 및 소통의 장',
+    stepTitle: 'STEP 3: AI 시대 적합 업무 영역 (AI-Era Work Domain)',
     trialNumber: 3,
-    chapterTitle: '제3막: 지휘권의 시험대와 마지노선',
+    chapterTitle: '제3막: 지식 아키텍처의 정점',
     backgroundScene:
-      '본부에서 파견된 감사관이 뒤늦게 합류하여 지휘권 이양을 요구한다. 그는 지금까지의 우회와 타협이 카라반의 일정을 늦췄다며, 남은 험로를 밤낮없이 강행군하라는 본부의 밀명을 들이민다. 대원들의 피로는 극에 달해 있고, 지금 강행군을 펼치면 낙오자가 속출할 것이 자명하다.',
+      '수많은 파편이 정돈되어 하나의 거대한 지식 체계가 되었다. AI 시대 지식 전문가로서의 길을 걷는다.',
     fx: 'pulse',
     options: [
       {
         id: 'A',
-        text: '"현장을 모르는 밀명은 종이쪽지에 불과하다. 감사관의 서류를 바위 위에 내려놓고, 대원들의 현 신체 상태 측정치와 지형 데이터를 들이밀며 내 지휘권 아래에서만 살아서 목적지에 닿을 수 있음을 못 박는다."',
-        whisper: {
-          gain: '대원들의 생존선 수호 및 현장 주도권의 확고한 장악',
-          cost: '임무 종료 후 본부 감사 및 정치적 불이익 직면'
-        },
-        weights: { resilience: 3, execution: 3, strategic: 2 },
-        nextTrialId: 't3_4',
-        reactionText: '감사관의 입술이 파르르 떨렸다. 종이 서류는 모래바람에 펄럭였으나 현장의 기세는 꺾이지 않았다.'
+        text: '"AI 시대에 남들이 놓치기 쉬운 본질과 실무 노하우를 발굴해 전자책, 뉴스레터, 전문 가이드로 자산화하는 버티컬 지식 디렉터가 된다. 내 지식 자체가 영구적인 자산이 된다."',
+        whisper: { gain: '지속 가능한 디지털 지식 자산 구축', cost: '지속적인 깊이 있는 집필과 업데이트' },
+        weights: { strategic: 3, resilience: 2 },
+        nextTrialId: 'CHRONICLE',
+        reactionText: '나만의 지식 서고가 견고한 디지털 자산으로 빛나기 시작했다.'
       },
       {
         id: 'B',
-        text: '"정면충돌은 감사관을 궁지로 몰아 더 위험한 수를 쓰게 만든다. 그의 보고서에 실릴 명분을 세워주기 위해 험로 대신 안전한 능선길 주파 기록을 그의 전략적 공으로 돌리고, 행군 속도를 현실에 맞춘다."',
-        whisper: {
-          gain: '본부와의 정치적 마찰 없는 평화적 타협과 실질적 대원 보호',
-          cost: '공을 남에게 넘기는 데서 오는 내면의 씁쓸함 감수'
-        },
-        weights: { strategic: 3, collaboration: 3, creativity: 2 },
-        nextTrialId: 't3_4',
-        reactionText: '감사관의 표정에 흡족한 미소가 번졌다. 명분은 그가 가져갔으나, 사람들은 살았다.'
+        text: '"복잡한 기술과 세상의 흐름을 대중의 언어로 번역해주는 인텔리전스 스토리텔러. AI를 조율해 매력적인 글, 영상, 인포그래픽을 쏟아내는 콘텐츠 파이프라인을 구축한다."',
+        whisper: { gain: '넓은 대중적 도달 범위와 강력한 미디어 파워', cost: '플랫폼 알고리즘 트렌드에 대한 기민함' },
+        weights: { creativity: 3, collaboration: 2 },
+        nextTrialId: 'CHRONICLE',
+        reactionText: '세상으로 송출되는 내 콘텐츠에 수많은 공감의 불빛이 켜진다.'
       }
     ]
   },
 
-  't3_4': {
-    id: 't3_4',
+  't3_3D': {
+    id: 't3_3D',
     step: 3,
-    stepTitle: 'STEP 3: 조직 내 갈등 해결 및 소통의 장',
-    trialNumber: 4,
-    chapterTitle: '제4막 (최종 시련): 새벽의 결단과 연대의 나침반',
+    stepTitle: 'STEP 3: AI 시대 적합 업무 영역 (AI-Era Work Domain)',
+    trialNumber: 3,
+    chapterTitle: '제3막: 휴먼 터치와 신뢰의 요새',
     backgroundScene:
-      '동틀 녘, 마침내 우리는 모든 갈등과 풍파를 뚫고 최종 분기점인 협곡의 정상에 섰다. 저 멀리 안식의 성채가 보이지만, 뒤편에서는 마지막 모래 폭풍이 거대한 벽처럼 몰려오고 있다. 협곡의 도개교는 한 사람만이 밖에서 레버를 고정해야 대열 전체가 안전하게 건널 수 있는 구조다. 모두가 침묵 속에 서로의 얼굴을 바라본다.',
-    fx: 'shake',
+      '기술이 넘쳐날수록 인간의 체온이 가장 귀해진다. AI 시대를 관통하는 인간 중심의 포지션을 완성한다.',
+    fx: 'pulse',
     options: [
       {
         id: 'A',
-        text: '"누군가의 희생을 전제로 한 승리는 승리가 아니다. 주변의 쐐기목과 와이어를 끌어모아 레버를 자동 고정시키는 임시 크레인을 3분 안에 결속하고, 단 한 사람의 낙오자도 없이 다 함께 다리를 건넌다."',
-        whisper: {
-          gain: '모두가 함께 생환하는 기적적 완결 및 팀의 완벽한 일체감',
-          cost: '기계 결속 실패 시 다리가 올라가며 전원 고립될 수 있는 3분의 도박'
-        },
-        weights: { execution: 3, creativity: 3, resilience: 3 },
+        text: '"AI 툴은 도구일 뿐, 핵심은 사람의 막막함과 고립감을 풀어주는 것이다. 같은 목표를 가진 사람들을 엮어 서로를 이끌어주는 고밀도 멤버십 커뮤니티의 호스트가 된다."',
+        whisper: { gain: '대체할 수 없는 강력한 유대감과 구독형 비즈니스', cost: '지속적인 모더레이션과 멤버 케어' },
+        weights: { collaboration: 3, resilience: 2 },
         nextTrialId: 'CHRONICLE',
-        reactionText: '와이어가 팽팽하게 울렸다. 레버가 고정되는 둔탁한 쇳소리와 함께 마지막 발걸음이 다리를 건넜다.'
+        reactionText: '서로를 지탱하는 든든한 사람들의 연대가 완성되었다.'
       },
       {
         id: 'B',
-        text: '"지휘관의 책무는 시작과 끝을 온전히 맺는 것이다. 대원 전원을 먼저 다리 건너편으로 밀어 넣은 뒤, 내가 직접 레버를 쥐고 성채의 개폐 도르래가 완전히 맞물릴 때까지 마지노선을 홀로 사수한다."',
-        whisper: {
-          gain: '조직원 전원의 100% 무조건 생존 보장과 불멸의 신뢰 각인',
-          cost: '리더 본인이 마지막 폭풍의 잔해를 온몸으로 받아내야 하는 극한의 고통'
-        },
-        weights: { resilience: 4, collaboration: 2, strategic: 2 },
+        text: '"기술에 서툰 이들에게 AI를 친절하게 가르쳐주고 그들의 잠재력을 터뜨려주는 1:1 라이프 & 비즈니스 코치. 한 사람의 삶이 실제로 바뀌는 순간을 만들어낸다."',
+        whisper: { gain: '깊은 개인적 만족감과 높은 신뢰 기반 고객 관계', cost: '개별 멘토링에 투입되는 시간' },
+        weights: { collaboration: 3, execution: 2 },
         nextTrialId: 'CHRONICLE',
-        reactionText: '등 뒤로 쇠사슬이 단단히 물렸다. 폭풍의 먼지가 시야를 가렸으나 내면의 나침반은 흔들림이 없었다.'
+        reactionText: '눈앞의 사람이 두려움을 떨치고 미소 지었다.'
       }
     ]
   }
 };
+
+export function determineStep3Profile(scores: Record<CompassDimension, number>): StepProfile {
+  if (scores.strategic >= scores.creativity && scores.strategic >= scores.collaboration) {
+    return {
+      step: 3,
+      stepName: 'STEP 3: AI 시대 적합 업무 영역 (AI-Era Work Domain)',
+      archetypeTitle: 'AI 워크플로우 & 지능형 시스템 아키텍트',
+      englishTitle: 'The AI Workflow & Pipeline Architect',
+      coreTraits: [
+        '복잡한 반복 수작업을 AI API와 자동화 툴로 연결해 최적화',
+        '혼자서도 기업 수준의 시스템을 운용하는 1인 레버리지 역량',
+        '흩어진 데이터와 툴을 하나의 유기적 파이프라인으로 구조화',
+        '최신 AI 모델의 특성을 꿰뚫고 최적의 프롬프트를 설계하는 통찰'
+      ],
+      summary:
+        'AI를 단순한 채팅 도구가 아닌, 내 손발이 되는 자동화 파이프라인으로 조율합니다. 비효율적인 수작업을 기술로 걷어내고 혼자서도 10인분의 생산성을 내는 지능형 시스템을 설계하는 데 최고의 적성을 발휘합니다.'
+    };
+  } else if (scores.execution >= scores.creativity) {
+    return {
+      step: 3,
+      stepName: 'STEP 3: AI 시대 적합 업무 영역 (AI-Era Work Domain)',
+      archetypeTitle: '1인 AI 서비스 빌더 & 마이크로 프로덕트 메이커',
+      englishTitle: 'The Solo AI Product Builder',
+      coreTraits: [
+        '아이디어를 AI 도구(Cursor, v0 등)로 며칠 만에 실체화하는 기동력',
+        '작지만 날카로운 현실의 가려움을 긁어주는 마이크로 서비스 기획',
+        '완벽주의를 버리고 빠르게 시장에 배포해 검증하는 실행주의',
+        '개발부터 브랜딩까지 전 과정을 유연하게 조율하는 솔로프리너십'
+      ],
+      summary:
+        '코딩의 진입장벽이 무너진 AI 시대의 가장 강력한 수혜자입니다. 복잡한 조직이나 투자 유치 없이도, 혼자의 힘으로 아이디어를 당장 작동하는 웹/앱 서비스로 뚝딱 구현해 세상에 던지는 1인 메이커 영역에 완벽히 부합합니다.'
+    };
+  } else if (scores.creativity >= scores.collaboration) {
+    return {
+      step: 3,
+      stepName: 'STEP 3: AI 시대 적합 업무 영역 (AI-Era Work Domain)',
+      archetypeTitle: '버티컬 AI 콘텐츠 디렉터 & 지식 자산 큐레이터',
+      englishTitle: 'The Vertical AI Content Director',
+      coreTraits: [
+        'AI를 활용한 초고속 리서치와 독창적 관점의 글·미디어 창작',
+        '정보 과잉 시대에 필요한 핵심만 정제해 전달하는 큐레이션 역량',
+        '나만의 고유한 세계관과 감각이 녹아든 디지털 지식 자산화',
+        'AI 생성 도구를 자유자재로 다뤄 시각/스토리텔링 가치를 극대화'
+      ],
+      summary:
+        'AI가 쏟아내는 수많은 텍스트 속에서 나만의 날카로운 통찰과 감각적 편집력을 발휘합니다. 독보적인 버티컬 지식 콘텐츠, 뉴스레터, 가이드북, 인터랙티브 미디어를 빚어내며 디지털 자산을 쌓아가는 크리에이터 영역에 최적화되어 있습니다.'
+    };
+  } else {
+    return {
+      step: 3,
+      stepName: 'STEP 3: AI 시대 적합 업무 영역 (AI-Era Work Domain)',
+      archetypeTitle: 'AI-휴먼 하이브리드 커뮤니티 파운더 & 코치',
+      englishTitle: 'The Hybrid Community Founder & Coach',
+      coreTraits: [
+        '기술이 줄 수 없는 인간적 온기와 진정성 있는 관계 형성',
+        'AI 도구를 배우고 싶어 하는 사람들을 잇고 성장시키는 촉매 역할',
+        '신뢰 기반의 고밀도 멤버십과 버티컬 커뮤니티 운영',
+        '개개인의 막막함을 짚어내고 맞춤형 로드맵을 선물하는 공감력'
+      ],
+      summary:
+        'AI가 발전할수록 역설적으로 가장 귀해지는 것은 ‘사람 간의 신뢰와 연결’입니다. AI의 강력한 생산성을 바탕으로 사람들의 두려움을 덜어주고, 함께 배우고 성장할 수 있는 커뮤니티와 1:1 코칭 비즈니스를 꽃피우는 데 천부적인 재능을 보입니다.'
+    };
+  }
+}

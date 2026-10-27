@@ -4,7 +4,7 @@ import React from 'react';
 import { motion, AnimatePresence } from 'framer-motion';
 import { Map, RotateCcw, CheckCircle2, ChevronRight, X, Compass } from 'lucide-react';
 import { useQuestStore } from '@/store/useQuestStore';
-import { STEP3_TRIALS } from '@/data/story/step3_conflict';
+import { ALL_TRIALS } from '@/data/story/allTrials';
 
 interface JourneyMapModalProps {
   isOpen: boolean;
@@ -61,7 +61,7 @@ export const JourneyMapModal: React.FC<JourneyMapModalProps> = ({ isOpen, onClos
             {/* Trial Path Timeline */}
             <div className="mt-4 flex-1 overflow-y-auto space-y-3 pr-1">
               {allEncountered.map((tId, idx) => {
-                const trial = STEP3_TRIALS[tId];
+                const trial = ALL_TRIALS[tId];
                 if (!trial) return null;
                 const isCurrent = tId === currentTrialId;
                 const decision = decisions[tId];
@@ -78,7 +78,7 @@ export const JourneyMapModal: React.FC<JourneyMapModalProps> = ({ isOpen, onClos
                     <div className="flex items-center justify-between">
                       <div className="flex items-center gap-2">
                         <span className="text-[11px] font-mono font-bold text-cyan-400 bg-cyan-950 px-2 py-0.5 rounded border border-cyan-800/60">
-                          시련 {trial.trialNumber}
+                          STEP {trial.step} - 시련 {trial.trialNumber}
                         </span>
                         <h4 className="text-sm font-semibold text-slate-200">
                           {trial.chapterTitle}
@@ -98,19 +98,18 @@ export const JourneyMapModal: React.FC<JourneyMapModalProps> = ({ isOpen, onClos
                       )}
 
                       {isCurrent && (
-                        <span className="text-xs font-semibold text-cyan-400 flex items-center gap-1">
-                          <span className="w-2 h-2 rounded-full bg-cyan-400 animate-pulse" />
-                          현재 현장
+                        <span className="text-xs font-bold text-emerald-400 flex items-center gap-1">
+                          <CheckCircle2 className="w-3.5 h-3.5" />
+                          <span>현재 머무는 곳</span>
                         </span>
                       )}
                     </div>
 
-                    {/* Decision Snapshot if answered */}
                     {decision && (
-                      <div className="mt-2.5 pt-2 border-t border-slate-800/80 text-xs text-slate-400 flex items-start gap-2">
-                        <CheckCircle2 className="w-3.5 h-3.5 text-emerald-400 shrink-0 mt-0.5" />
-                        <span className="line-clamp-2 italic">
-                          {decision.text}
+                      <div className="mt-2.5 pt-2 border-t border-slate-800/80 text-xs text-slate-300 flex items-start gap-1.5">
+                        <ChevronRight className="w-3.5 h-3.5 text-cyan-400 shrink-0 mt-0.5" />
+                        <span className="italic text-slate-300 font-serif">
+                          선택: &ldquo;{decision.text}&rdquo;
                         </span>
                       </div>
                     )}
@@ -119,15 +118,12 @@ export const JourneyMapModal: React.FC<JourneyMapModalProps> = ({ isOpen, onClos
               })}
             </div>
 
-            {/* Footer */}
+            {/* Footer Summary */}
             <div className="mt-4 pt-3 border-t border-slate-800 flex items-center justify-between text-xs text-slate-400">
-              <span>총 {history.length + 1}개의 시련을 탐색 중입니다.</span>
-              <button
-                onClick={onClose}
-                className="px-4 py-2 rounded-xl bg-slate-800 hover:bg-slate-700 text-slate-200 font-semibold transition-colors"
-              >
-                닫기
-              </button>
+              <span>통과한 관문: {history.length}개</span>
+              <span className="text-cyan-400 font-mono">
+                코어 엔진: 기질 ➔ 취향 ➔ AI 시대 적합성
+              </span>
             </div>
           </motion.div>
         </div>

@@ -3,7 +3,7 @@
 import { create } from 'zustand';
 import { persist } from 'zustand/middleware';
 import { ChronicleResult, CompassDimension, FxType, MonologueOption, WhisperCost } from '@/types/quest';
-import { STEP3_TRIALS } from '@/data/story/step3_conflict';
+import { ALL_TRIALS } from '@/data/story/allTrials';
 import { synthesizeChronicle } from '@/data/story/archetypesMaster';
 
 const INITIAL_SCORES: Record<CompassDimension, number> = {
@@ -13,6 +13,12 @@ const INITIAL_SCORES: Record<CompassDimension, number> = {
   collaboration: 0,
   resilience: 0
 };
+
+export interface UnlockModalState {
+  isOpen: boolean;
+  unlockedStep: 2 | 3;
+  nextTrialId: string;
+}
 
 interface QuestState {
   currentTrialId: string;
@@ -25,10 +31,12 @@ interface QuestState {
   isTimerRunning: boolean;
   chronicleResult: ChronicleResult | null;
   isCompleted: boolean;
+  unlockModal: UnlockModalState | null;
 
   // Actions
   startQuest: () => void;
   selectOption: (option: MonologueOption) => void;
+  proceedFromUnlock: () => void;
   rewindTo: (trialId: string) => void;
   rewindToPrevious: () => void;
   openWhisper: (whisper: WhisperCost) => void;
@@ -43,7 +51,7 @@ interface QuestState {
 export const useQuestStore = create<QuestState>()(
   persist(
     (set, get) => ({
-      currentTrialId: 't3_1',
+      currentTrialId: 't1_1',
       history: [],
       decisions: {},
       scores: INITIAL_SCORES,
@@ -53,11 +61,12 @@ export const useQuestStore = create<QuestState>()(
       isTimerRunning: true,
       chronicleResult: null,
       isCompleted: false,
+      unlockModal: null,
 
       startQuest: () => {
-        const initialTrial = STEP3_TRIALS['t3_1'];
+        const initialTrial = ALL_TRIALS['t1_1'];
         set({
-          currentTrialId: 't3_1',
+          currentTrialId: 't1_1',
           history: [],
           decisions: {},
           scores: INITIAL_SCORES,
@@ -66,7 +75,8 @@ export const useQuestStore = create<QuestState>()(
           timerSeconds: 10,
           isTimerRunning: true,
           chronicleResult: null,
-          isCompleted: false
+          isCompleted: false,
+          unlockModal: null
         });
       },
 
@@ -92,113 +102,177 @@ export const useQuestStore = create<QuestState>()(
 
         const newHistory = [...history, currentTrialId];
 
-        // 3. 종착지(CHRONICLE) 확인
-        if (option.nextTrialId === 'CHRONICLE' || !STEP3_TRIALS[option.nextTrialId]) {
+        // 3. 스텝 전환 잠금해제 트리거 확인
+        if (option.nextTrialId === 'UNLOCK_STEP2') {
+          set({
+            decisions: newDecisions,
+            history: newHistory,
+            scores: newScores,
+            isTimerRunning: false,
+            unlockModal: {
+              isOpen: true,
+              unlockedStep: 2,
+              nextTrialId: 't2_1'
+            }
+          });
+          return;
+        }
+
+        if (option.nextTrialId === 'UNLOCK_STEP3') {
+          set({
+            decisions: newDecisions,
+            history: newHistory,
+            scores: newScores,
+            isTimerRunning: false,
+            unlockModal: {
+              isOpen: true,
+              unlockedStep: 3,
+              nextTrialId: 't3_1'
+            }
+          });
+          return;
+        }
+
+        // 4. 종착지(CHRONICLE) 확인
+        if (option.nextTrialId === 'CHRONICLE' || !ALL_TRIALS[option.nextTrialId]) {
           const result = synthesizeChronicle(newScores);
           set({
             decisions: newDecisions,
             history: newHistory,
             scores: newScores,
-            activeWhisper: null,
-            activeFx: 'pulse',
-            isTimerRunning: false,
             chronicleResult: result,
-            isCompleted: true
+            isCompleted: true,
+            isTimerRunning: false
           });
           return;
         }
 
-        const nextTrial = STEP3_TRIALS[option.nextTrialId];
-
+        // 5. 일반 다음 시련으로 전진
+        const nextTrial = ALL_TRIALS[option.nextTrialId];
         set({
           currentTrialId: option.nextTrialId,
           history: newHistory,
           decisions: newDecisions,
           scores: newScores,
-          activeWhisper: null,
-          activeFx: nextTrial.fx,
+          activeFx: nextTrial ? nextTrial.fx : 'none',
           timerSeconds: 10,
-          isTimerRunning: true
+          isTimerRunning: true,
+          activeWhisper: null
         });
       },
 
-      rewindTo: (targetTrialId) => {
+      proceedFromUnlock: () => {
+        const { unlockModal } = get();
+        if (!unlockModal) return;
+
+        const nextTrialId = unlockModal.nextTrialId;
+        const nextTrial = ALL_TRIALS[nextTrialId];
+
+        set({
+          unlockModal: null,
+          currentTrialId: nextTrialId,
+          activeFx: nextTrial ? nextTrial.fx : 'none',
+          timerSeconds: 10,
+          isTimerRunning: true,
+          activeWhisper: null
+        });
+      },
+
+      rewindTo: (trialId) => {
         const { history, decisions } = get();
-        const targetIndex = history.indexOf(targetTrialId);
-        if (targetIndex === -1 && targetTrialId !== 't3_1') return;
+        const targetIndex = history.indexOf(trialId);
+        if (targetIndex === -1 && trialId !== 't1_1') return;
 
-        const newHistory = targetTrialId === 't3_1' ? [] : history.slice(0, targetIndex);
+        // targetIndex 이후의 기록 제거
+        const newHistory = targetIndex === -1 ? [] : history.slice(0, targetIndex);
         const newDecisions = { ...decisions };
-
-        // 이후 결정들 정리
-        Object.keys(newDecisions).forEach((tId) => {
-          if (!newHistory.includes(tId) && tId !== targetTrialId) {
-            delete newDecisions[tId];
+        Object.keys(newDecisions).forEach((key) => {
+          if (!newHistory.includes(key)) {
+            delete newDecisions[key];
           }
         });
 
-        const targetTrial = STEP3_TRIALS[targetTrialId] || STEP3_TRIALS['t3_1'];
-
+        const targetTrial = ALL_TRIALS[trialId] || ALL_TRIALS['t1_1'];
         set({
-          currentTrialId: targetTrialId,
+          currentTrialId: trialId,
           history: newHistory,
           decisions: newDecisions,
-          activeWhisper: null,
-          activeFx: targetTrial.fx,
+          activeFx: targetTrial ? targetTrial.fx : 'none',
           timerSeconds: 10,
           isTimerRunning: true,
-          isCompleted: false
+          activeWhisper: null,
+          isCompleted: false,
+          unlockModal: null
         });
       },
 
       rewindToPrevious: () => {
         const { history } = get();
         if (history.length === 0) return;
-        const prevTrialId = history[history.length - 1];
-        get().rewindTo(prevTrialId);
+        const previousTrialId = history[history.length - 1];
+        get().rewindTo(previousTrialId);
       },
 
-      openWhisper: (whisper) => set({ activeWhisper: whisper }),
-      closeWhisper: () => set({ activeWhisper: null }),
+      openWhisper: (whisper) => {
+        set({ activeWhisper: whisper });
+      },
 
-      triggerFx: (fx) => set({ activeFx: fx }),
+      closeWhisper: () => {
+        set({ activeWhisper: null });
+      },
+
+      triggerFx: (fx) => {
+        set({ activeFx: fx });
+      },
 
       decrementTimer: () => {
         const { timerSeconds, isTimerRunning } = get();
         if (!isTimerRunning) return;
         if (timerSeconds <= 1) {
-          set({ timerSeconds: 0, isTimerRunning: false });
+          set({ timerSeconds: 0 });
         } else {
           set({ timerSeconds: timerSeconds - 1 });
         }
       },
 
-      resetTimer: () => set({ timerSeconds: 10, isTimerRunning: true }),
+      resetTimer: () => {
+        set({ timerSeconds: 10, isTimerRunning: true });
+      },
 
       calculateChronicle: () => {
         const { scores } = get();
         const result = synthesizeChronicle(scores);
-        set({ chronicleResult: result });
+        set({ chronicleResult: result, isCompleted: true });
         return result;
       },
 
       resetQuest: () => {
+        const initialTrial = ALL_TRIALS['t1_1'];
         set({
-          currentTrialId: 't3_1',
+          currentTrialId: 't1_1',
           history: [],
           decisions: {},
           scores: INITIAL_SCORES,
           activeWhisper: null,
-          activeFx: 'none',
+          activeFx: initialTrial ? initialTrial.fx : 'none',
           timerSeconds: 10,
           isTimerRunning: true,
           chronicleResult: null,
-          isCompleted: false
+          isCompleted: false,
+          unlockModal: null
         });
       }
     }),
     {
-      name: 'mind-quest-storage'
+      name: 'quest-compass-storage',
+      partialize: (state) => ({
+        currentTrialId: state.currentTrialId,
+        history: state.history,
+        decisions: state.decisions,
+        scores: state.scores,
+        chronicleResult: state.chronicleResult,
+        isCompleted: state.isCompleted
+      })
     }
   )
 );

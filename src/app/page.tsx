@@ -10,15 +10,18 @@ import {
   Shield,
   Zap,
   Sparkles,
-  Eye,
-  Hourglass,
-  RotateCcw,
+  Lock,
+  Unlock,
+  Cpu,
+  BrainCircuit,
+  Layers,
   CheckCircle2
 } from 'lucide-react';
-import { STEP1_PROFILE } from '@/data/story/step1_origin';
-import { STEP2_PROFILE } from '@/data/story/step2_tactics';
+import { useQuestStore } from '@/store/useQuestStore';
 
 export default function HomePage() {
+  const { resetQuest } = useQuestStore();
+
   return (
     <div className="flex-1 flex flex-col justify-center max-w-5xl mx-auto px-4 sm:px-6 py-10 sm:py-16 w-full">
       {/* Prologue Header */}
@@ -29,7 +32,7 @@ export default function HomePage() {
           className="inline-flex items-center gap-2 px-3.5 py-1.5 rounded-full bg-cyan-950/70 border border-cyan-500/40 text-cyan-300 text-xs font-semibold mb-5 shadow-sm"
         >
           <Compass className="w-3.5 h-3.5 animate-[spin_10s_linear_infinite]" />
-          <span>MUD 텍스트 RPG 소설형 기질 & 적성 분석 엔진</span>
+          <span>MUD 소설형 기질·취향·AI 적무 진단 엔진</span>
         </motion.div>
 
         <motion.h1
@@ -50,8 +53,9 @@ export default function HomePage() {
           transition={{ delay: 0.2 }}
           className="mt-5 text-base sm:text-lg text-slate-300 leading-relaxed font-light"
         >
-          진부한 객관식 설문지는 잊으십시오. 거친 모래 폭풍이 몰아치는 소설의 한복판에서,
-          오직 당신의 1인칭 독백과 본능적인 결단으로 나만의 항로를 증명합니다.
+          진부한 객관식 설문지는 잊으십시오. 1인칭 소설의 갈림길에서 내리는 본능적인 결단으로
+          나의 근본 기질과 몰입 취향을 찾고, <br className="hidden sm:inline" />
+          <strong className="text-cyan-300 font-semibold">AI 시대에 내가 어떤 영역의 일에서 가장 빛날지</strong> 확인하십시오.
         </motion.p>
 
         {/* Call To Action Buttons */}
@@ -63,130 +67,114 @@ export default function HomePage() {
         >
           <Link
             href="/trials"
-            className="flex items-center gap-2.5 px-7 py-3.5 rounded-2xl bg-gradient-to-r from-cyan-600 to-teal-500 hover:from-cyan-500 hover:to-teal-400 text-slate-950 font-bold text-sm sm:text-base tracking-wide shadow-[0_0_25px_rgba(6,182,212,0.4)] transition-all hover:scale-105"
+            onClick={() => resetQuest()}
+            className="flex items-center gap-2.5 px-8 py-4 rounded-2xl bg-gradient-to-r from-cyan-600 via-teal-500 to-cyan-500 hover:from-cyan-500 hover:to-teal-400 text-slate-950 font-extrabold text-sm sm:text-base tracking-wide shadow-[0_0_30px_rgba(6,182,212,0.4)] transition-all hover:scale-105"
           >
             <Scroll className="w-4 h-4 text-slate-950" />
-            <span>시련의 장 입장하기 (STEP 3)</span>
+            <span>내면의 나침반 시련 시작하기 (STEP 1)</span>
             <ArrowRight className="w-4 h-4 text-slate-950" />
           </Link>
 
           <Link
-            href="/chronicle/profile"
-            className="flex items-center gap-2 px-5 py-3.5 rounded-2xl bg-slate-900 hover:bg-slate-800 text-slate-200 border border-slate-700/80 text-sm font-semibold transition-all"
+            href="/chronicle"
+            className="flex items-center gap-2 px-5 py-4 rounded-2xl bg-slate-900 hover:bg-slate-800 text-slate-200 border border-slate-700/80 text-sm font-semibold transition-all"
           >
             <Shield className="w-4 h-4 text-amber-400" />
-            <span>Sir의 기 분석 프로필 열람</span>
+            <span>최근 연대기 결과 확인</span>
           </Link>
         </motion.div>
       </div>
 
-      {/* Sir's Analysis Snapshot Card */}
+      {/* 3-Step Core Engine Showcase */}
       <motion.div
         initial={{ opacity: 0, scale: 0.98 }}
         animate={{ opacity: 1, scale: 1 }}
         transition={{ delay: 0.35 }}
-        className="mb-12 rounded-3xl bg-gradient-to-b from-slate-900 to-slate-950 border border-amber-500/30 p-6 sm:p-8 shadow-2xl relative overflow-hidden"
+        className="mb-12 rounded-3xl bg-gradient-to-b from-slate-900 to-slate-950 border border-slate-800 p-6 sm:p-8 shadow-2xl relative overflow-hidden"
       >
-        <div className="absolute top-0 right-0 w-80 h-80 bg-amber-500/5 rounded-full blur-3xl pointer-events-none" />
+        <div className="absolute top-0 right-0 w-80 h-80 bg-cyan-500/5 rounded-full blur-3xl pointer-events-none" />
 
         <div className="flex items-center justify-between pb-4 mb-6 border-b border-slate-800">
-          <div className="flex items-center gap-2 text-amber-400">
-            <Sparkles className="w-4 h-4" />
+          <div className="flex items-center gap-2 text-cyan-400">
+            <BrainCircuit className="w-4 h-4" />
             <span className="text-xs font-mono font-bold tracking-wider uppercase">
-              기 분석 완료 프로필 아카이브
+              Core Engine Architecture
             </span>
           </div>
-          <span className="text-xs font-semibold text-emerald-400 flex items-center gap-1.5">
-            <CheckCircle2 className="w-3.5 h-3.5" />
-            STEP 1 & STEP 2 동기화됨
+          <span className="text-xs font-semibold text-amber-400 flex items-center gap-1.5">
+            <Sparkles className="w-3.5 h-3.5" />
+            <span>스텝 통과 시 카테고리 자물쇠 잠금 해제</span>
           </span>
         </div>
 
-        <div className="grid grid-cols-1 md:grid-cols-2 gap-6">
-          {/* STEP 1 Card */}
-          <div className="p-5 rounded-2xl bg-slate-900/80 border border-slate-800">
-            <div className="text-[11px] font-mono text-cyan-400 font-bold mb-1">
-              {STEP1_PROFILE.stepName}
+        {/* 3 Pillars Progression Cards */}
+        <div className="grid grid-cols-1 md:grid-cols-3 gap-5">
+          {/* Engine 1 */}
+          <div className="p-5 rounded-2xl bg-slate-950 border border-cyan-500/40 flex flex-col justify-between">
+            <div>
+              <div className="flex items-center justify-between mb-2">
+                <span className="text-[11px] font-mono font-bold text-cyan-400 bg-cyan-950 px-2.5 py-0.5 rounded-full border border-cyan-800/80">
+                  STEP 01
+                </span>
+                <span className="text-xs text-slate-400 font-mono">기질 진단</span>
+              </div>
+              <h3 className="text-base font-bold text-slate-100 font-serif mb-2">
+                근본 기질 파악
+              </h3>
+              <p className="text-xs text-slate-300 leading-relaxed font-light">
+                지휘관이나 리더 프레임이 아닌, 문제와 지식을 대하는 나 자신의 순수한 내면 엔진(탐구형/실용구축형/감각창작형/공감조율형)을 발견합니다.
+              </p>
             </div>
-            <h3 className="text-lg font-bold text-slate-100 font-serif mb-2">
-              [{STEP1_PROFILE.archetypeTitle}]
-            </h3>
-            <p className="text-xs sm:text-sm text-slate-300 leading-relaxed font-light line-clamp-3">
-              {STEP1_PROFILE.summary}
-            </p>
+            <div className="mt-4 pt-3 border-t border-slate-900 text-[11px] text-cyan-300/80 font-mono">
+              ⚓ 내면의 진북 설정
+            </div>
           </div>
 
-          {/* STEP 2 Card */}
-          <div className="p-5 rounded-2xl bg-slate-900/80 border border-slate-800">
-            <div className="text-[11px] font-mono text-amber-400 font-bold mb-1">
-              {STEP2_PROFILE.stepName}
+          {/* Engine 2 */}
+          <div className="p-5 rounded-2xl bg-slate-950 border border-amber-500/40 flex flex-col justify-between">
+            <div>
+              <div className="flex items-center justify-between mb-2">
+                <span className="text-[11px] font-mono font-bold text-amber-400 bg-amber-950 px-2.5 py-0.5 rounded-full border border-amber-800/80">
+                  STEP 02 (🔒 언락)
+                </span>
+                <span className="text-xs text-slate-400 font-mono">동기 분석</span>
+              </div>
+              <h3 className="text-base font-bold text-slate-100 font-serif mb-2">
+                취향 & 몰입 동기
+              </h3>
+              <p className="text-xs text-slate-300 leading-relaxed font-light">
+                시간 가는 줄 모르고 빠져드는 작업 환경, 에너지가 솟구치는 순간(시스템 자동화, 감각적 창작, 즉각적 실체화, 사람 간 연결)을 파악합니다.
+              </p>
             </div>
-            <h3 className="text-lg font-bold text-slate-100 font-serif mb-2">
-              [{STEP2_PROFILE.archetypeTitle}]
-            </h3>
-            <p className="text-xs sm:text-sm text-slate-300 leading-relaxed font-light line-clamp-3">
-              {STEP2_PROFILE.summary}
-            </p>
+            <div className="mt-4 pt-3 border-t border-slate-900 text-[11px] text-amber-300/80 font-mono flex items-center gap-1">
+              <Unlock className="w-3 h-3 text-amber-400" />
+              <span>자물쇠 찰칵 해제 연출</span>
+            </div>
+          </div>
+
+          {/* Engine 3 */}
+          <div className="p-5 rounded-2xl bg-slate-950 border border-emerald-500/40 flex flex-col justify-between">
+            <div>
+              <div className="flex items-center justify-between mb-2">
+                <span className="text-[11px] font-mono font-bold text-emerald-400 bg-emerald-950 px-2.5 py-0.5 rounded-full border border-emerald-800/80">
+                  STEP 03 (🔒 언락)
+                </span>
+                <span className="text-xs text-slate-400 font-mono">업무 매칭</span>
+              </div>
+              <h3 className="text-base font-bold text-slate-100 font-serif mb-2">
+                AI 시대 적합 업무 영역
+              </h3>
+              <p className="text-xs text-slate-300 leading-relaxed font-light">
+                10년 경력직 타이틀이 아닌, AI라는 날개를 달았을 때 지금 당장 시작할 수 있는 최적의 현실적 업무 카테고리와 구체적 실행 도구를 도출합니다.
+              </p>
+            </div>
+            <div className="mt-4 pt-3 border-t border-slate-900 text-[11px] text-emerald-300/80 font-mono flex items-center gap-1">
+              <Cpu className="w-3 h-3 text-emerald-400" />
+              <span>현실적 1인 메이커/영역 제안</span>
+            </div>
           </div>
         </div>
       </motion.div>
-
-      {/* 3대 결정 장애 해소 인터랙션 소개 */}
-      <div className="grid grid-cols-1 md:grid-cols-3 gap-5 mb-10">
-        {/* Interaction 1: 🔍 속삭임 */}
-        <div className="rounded-2xl bg-slate-900/70 border border-slate-800 p-6 flex flex-col justify-between">
-          <div>
-            <div className="w-10 h-10 rounded-xl bg-amber-500/10 border border-amber-500/30 flex items-center justify-center text-amber-400 mb-4">
-              <Eye className="w-5 h-5" />
-            </div>
-            <h4 className="text-base font-bold text-slate-100 font-serif mb-1">
-              🔍 [속삭임]
-            </h4>
-            <p className="text-xs text-slate-400 leading-relaxed mt-2">
-              선택지 탭 시 결단이 불러올 [얻는 가치 vs 치를 대가]를 1줄 팝업으로 명확히 제시하여 결정 피로를 해소합니다.
-            </p>
-          </div>
-          <span className="mt-4 text-[11px] font-mono text-amber-400 font-semibold">
-            기회비용 즉시 통찰
-          </span>
-        </div>
-
-        {/* Interaction 2: ⏳ 모래시계 */}
-        <div className="rounded-2xl bg-slate-900/70 border border-slate-800 p-6 flex flex-col justify-between">
-          <div>
-            <div className="w-10 h-10 rounded-xl bg-cyan-500/10 border border-cyan-500/30 flex items-center justify-center text-cyan-400 mb-4">
-              <Hourglass className="w-5 h-5" />
-            </div>
-            <h4 className="text-base font-bold text-slate-100 font-serif mb-1">
-              ⏳ [모래시계]
-            </h4>
-            <p className="text-xs text-slate-400 leading-relaxed mt-2">
-              10초 카운트다운 게이지와 은은한 심장박동 애니메이션으로 머뭇거림 없는 무의식적 직관을 깨웁니다.
-            </p>
-          </div>
-          <span className="mt-4 text-[11px] font-mono text-cyan-400 font-semibold">
-            직관적 결단 유도
-          </span>
-        </div>
-
-        {/* Interaction 3: ⏪ 되감기 */}
-        <div className="rounded-2xl bg-slate-900/70 border border-slate-800 p-6 flex flex-col justify-between">
-          <div>
-            <div className="w-10 h-10 rounded-xl bg-emerald-500/10 border border-emerald-500/30 flex items-center justify-center text-emerald-400 mb-4">
-              <RotateCcw className="w-5 h-5" />
-            </div>
-            <h4 className="text-base font-bold text-slate-100 font-serif mb-1">
-              ⏪ [여정의 지도 & 되감기]
-            </h4>
-            <p className="text-xs text-slate-400 leading-relaxed mt-2">
-              언제든 상단의 여정 지도를 열어 지나온 갈림길을 확인하고, 원하는 직전 시련으로 복귀하여 재도전할 수 있습니다.
-            </p>
-          </div>
-          <span className="mt-4 text-[11px] font-mono text-emerald-400 font-semibold">
-            언제든 롤백 가능
-          </span>
-        </div>
-      </div>
     </div>
   );
 }
