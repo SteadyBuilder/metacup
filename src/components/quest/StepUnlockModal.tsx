@@ -96,16 +96,16 @@ export const StepUnlockModal: React.FC<StepUnlockModalProps> = ({
     unlockedStep === 2
       ? {
           stepNum: 'STEP 2',
-          title: '취향 & 몰입 동기 (Taste & Energy Drivers)',
-          sub: '근본 기질의 탐색이 완료되었습니다. 이제 당신의 심장을 뛰게 만드는 몰입의 취향과 작업 환경이 언락됩니다.',
+          title: '취향 & 관심 주제 탐색 (Taste & Domain Spectrum)',
+          sub: '1단계 근본 기질 규명이 완료되었습니다. 이제 당신의 지적 호기심과 심장을 뛰게 만드는 고유한 취향과 관심 테마가 언락됩니다.',
           accentColor: 'from-amber-500 to-yellow-400',
           borderColor: 'border-amber-500/60',
           glowColor: 'rgba(245, 158, 11, 0.4)'
         }
       : {
           stepNum: 'STEP 3',
-          title: 'AI 시대 적합 업무 영역 (AI-Era Work Domain)',
-          sub: '몰입의 취향이 확인되었습니다. 마침내 당신이라는 고유한 엔진이 AI 시대에 어떤 영역의 일에서 가장 빛날지 찾는 최종 관문이 열립니다.',
+          title: '추천 분야 및 호불호 판단 (Convergence & Judgment)',
+          sub: '기질과 취향의 분석이 완료되었습니다. 이제 당신에게 가장 부합하는 현실의 역할들이 제안되며, 본능의 호불호(좋다/싫다)로 최적의 길을 최종 검증합니다.',
           accentColor: 'from-emerald-400 to-teal-300',
           borderColor: 'border-emerald-500/60',
           glowColor: 'rgba(16, 185, 129, 0.4)'

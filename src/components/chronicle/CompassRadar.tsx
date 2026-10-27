@@ -11,10 +11,16 @@ import {
 } from 'recharts';
 
 interface CompassRadarProps {
-  data: { dimension: string; label: string; score: number; fullMark: number }[];
+  data: { label: string; score: number; fullMark?: number }[];
+  color?: string;
+  fillOpacity?: number;
 }
 
-export const CompassRadar: React.FC<CompassRadarProps> = ({ data }) => {
+export const CompassRadar: React.FC<CompassRadarProps> = ({
+  data,
+  color = '#06b6d4',
+  fillOpacity = 0.35
+}) => {
   return (
     <div className="w-full h-64 sm:h-72">
       <ResponsiveContainer width="100%" height="100%">
@@ -26,16 +32,16 @@ export const CompassRadar: React.FC<CompassRadarProps> = ({ data }) => {
           />
           <PolarRadiusAxis
             angle={30}
-            domain={[0, 100]}
+            domain={[0, 10]}
             tick={{ fill: '#64748b', fontSize: 9 }}
             stroke="#1e293b"
           />
           <Radar
             name="내면 지표"
             dataKey="score"
-            stroke="#06b6d4"
-            fill="#06b6d4"
-            fillOpacity={0.35}
+            stroke={color}
+            fill={color}
+            fillOpacity={fillOpacity}
           />
         </RadarChart>
       </ResponsiveContainer>

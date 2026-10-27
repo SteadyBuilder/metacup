@@ -10,15 +10,15 @@ import {
   Sparkles,
   RotateCcw,
   CheckCircle2,
-  AlertTriangle,
+  XCircle,
   BrainCircuit,
   Share2,
   ArrowRight,
-  Cpu,
-  Layers,
-  Wrench,
   Flame,
-  Check
+  Check,
+  Shield,
+  Heart,
+  Target
 } from 'lucide-react';
 import { useQuestStore } from '@/store/useQuestStore';
 import { CompassRadar } from '@/components/chronicle/CompassRadar';
@@ -26,11 +26,19 @@ import { synthesizeChronicle } from '@/data/story/archetypesMaster';
 import { ChronicleResult } from '@/types/quest';
 
 export default function ChroniclePage() {
-  const { chronicleResult, scores, resetQuest } = useQuestStore();
+  const {
+    chronicleResult,
+    temperamentScores,
+    tasteScores,
+    judgedRoles,
+    resetQuest
+  } = useQuestStore();
   const [copied, setCopied] = useState(false);
 
-  // Fallback if directly accessed without completing
-  const result: ChronicleResult = chronicleResult || synthesizeChronicle(scores);
+  // Fallback if accessed without completing
+  const result: ChronicleResult =
+    chronicleResult ||
+    synthesizeChronicle(temperamentScores, tasteScores, judgedRoles);
 
   const handleShare = () => {
     if (typeof window !== 'undefined' && navigator.clipboard) {
@@ -50,7 +58,7 @@ export default function ChroniclePage() {
           className="inline-flex items-center gap-2 px-3.5 py-1.5 rounded-full bg-cyan-950/80 border border-cyan-500/40 text-cyan-300 text-xs font-semibold mb-4"
         >
           <Compass className="w-3.5 h-3.5 animate-[spin_10s_linear_infinite]" />
-          <span>여정의 연대기 (Chronicle of Journey)</span>
+          <span>자기 탐색 최종 연대기 (Self-Discovery Chronicle)</span>
         </motion.div>
 
         <motion.h1
@@ -59,7 +67,7 @@ export default function ChroniclePage() {
           transition={{ delay: 0.1 }}
           className="text-2xl sm:text-4xl font-extrabold text-slate-100 font-serif tracking-tight"
         >
-          {result.grandTitle}
+          {result.temperament.title}
         </motion.h1>
 
         <motion.p
@@ -68,254 +76,214 @@ export default function ChroniclePage() {
           transition={{ delay: 0.2 }}
           className="mt-3 text-sm sm:text-base text-cyan-300 font-serif italic max-w-2xl mx-auto"
         >
-          &ldquo;{result.grandEpithet}&rdquo;
+          &ldquo;{result.temperament.epithet}&rdquo;
         </motion.p>
       </div>
 
-      {/* 3 Pillars: STEP 1 (기질), STEP 2 (취향), STEP 3 (AI 시대 업무 영역) */}
+      {/* 3대 핵심 발견: STEP 1 (기질) / STEP 2 (취향) / STEP 3 (자가 검증) */}
       <div className="grid grid-cols-1 md:grid-cols-3 gap-4 mb-10">
         {/* Step 1: 근본 기질 */}
         <div className="p-5 rounded-2xl bg-slate-900 border border-cyan-500/30 flex flex-col justify-between shadow-lg">
           <div>
-            <span className="text-[11px] font-mono font-bold text-cyan-400">
-              {result.step1.stepName}
-            </span>
-            <h3 className="text-base font-bold text-slate-100 font-serif mt-1 mb-2">
-              [{result.step1.archetypeTitle}]
+            <div className="flex items-center justify-between mb-2">
+              <span className="text-[11px] font-mono font-bold text-cyan-400">
+                STEP 1. 근본 기질
+              </span>
+              <Shield className="w-4 h-4 text-cyan-400" />
+            </div>
+            <h3 className="text-base font-bold text-slate-100 font-serif mb-2">
+              {result.temperament.title}
             </h3>
-            <p className="text-xs text-slate-300 leading-relaxed font-light">
-              {result.step1.summary}
+            <p className="text-xs text-slate-300 leading-relaxed font-light mb-3">
+              {result.temperament.deepEngine}
             </p>
           </div>
-          <div className="mt-4 pt-3 border-t border-slate-800 text-[11px] text-cyan-300/90 font-mono flex items-center gap-1.5">
-            <span className="w-2 h-2 rounded-full bg-cyan-400" />
-            <span>내면의 고유한 사고 엔진</span>
+          <div className="pt-3 border-t border-slate-800 text-[11px] text-cyan-300/90 font-mono">
+            🔋 충전: {result.temperament.energyRecharge}
           </div>
         </div>
 
-        {/* Step 2: 몰입 취향 */}
+        {/* Step 2: 관심 취향 */}
         <div className="p-5 rounded-2xl bg-slate-900 border border-amber-500/30 flex flex-col justify-between shadow-lg">
           <div>
-            <span className="text-[11px] font-mono font-bold text-amber-400">
-              {result.step2.stepName}
-            </span>
-            <h3 className="text-base font-bold text-slate-100 font-serif mt-1 mb-2">
-              [{result.step2.archetypeTitle}]
+            <div className="flex items-center justify-between mb-2">
+              <span className="text-[11px] font-mono font-bold text-amber-400">
+                STEP 2. 관심 취향
+              </span>
+              <Heart className="w-4 h-4 text-amber-400" />
+            </div>
+            <h3 className="text-base font-bold text-slate-100 font-serif mb-2">
+              {result.taste.primaryDomain}
             </h3>
-            <p className="text-xs text-slate-300 leading-relaxed font-light">
-              {result.step2.summary}
+            <p className="text-xs text-slate-300 leading-relaxed font-light mb-3">
+              {result.taste.tasteSummary}
             </p>
           </div>
-          <div className="mt-4 pt-3 border-t border-slate-800 text-[11px] text-amber-300/90 font-mono flex items-center gap-1.5">
-            <span className="w-2 h-2 rounded-full bg-amber-400" />
-            <span>시간 가는 줄 모르는 몰입 조건</span>
+          <div className="pt-3 border-t border-slate-800 text-[11px] text-amber-300/90 font-mono">
+            ⚡ 촉매: {result.taste.intellectualCatalyst}
           </div>
         </div>
 
-        {/* Step 3: 적합 업무 영역 */}
-        <div className="p-5 rounded-2xl bg-slate-900 border border-emerald-500/40 shadow-[0_0_20px_rgba(16,185,129,0.15)] flex flex-col justify-between">
+        {/* Step 3: 추천 & 검증 */}
+        <div className="p-5 rounded-2xl bg-slate-900 border border-emerald-500/30 flex flex-col justify-between shadow-lg">
           <div>
-            <span className="text-[11px] font-mono font-bold text-emerald-400">
-              {result.step3.stepName}
-            </span>
-            <h3 className="text-base font-bold text-slate-100 font-serif mt-1 mb-2">
-              [{result.step3.archetypeTitle}]
+            <div className="flex items-center justify-between mb-2">
+              <span className="text-[11px] font-mono font-bold text-emerald-400">
+                STEP 3. 자가 검증 경로
+              </span>
+              <Target className="w-4 h-4 text-emerald-400" />
+            </div>
+            <h3 className="text-base font-bold text-slate-100 font-serif mb-2">
+              {result.selectedBestRoles.length}개의 승인된 활로
             </h3>
-            <p className="text-xs text-slate-300 leading-relaxed font-light">
-              {result.step3.summary}
+            <p className="text-xs text-slate-300 leading-relaxed font-light mb-3">
+              이론적 권유에 기대지 않고, 매일 마주할 현실의 고단함까지 감당하겠다고 직접 승인한 경로
             </p>
           </div>
-          <div className="mt-4 pt-3 border-t border-slate-800 text-[11px] text-emerald-300/90 font-mono flex items-center gap-1.5">
-            <span className="w-2 h-2 rounded-full bg-emerald-400" />
-            <span>AI 시대 최적의 현실적 포지션</span>
+          <div className="pt-3 border-t border-slate-800 text-[11px] text-emerald-300/90 font-mono">
+            🛡️ 배제된 비선호: {result.discardedRoles.length}개
           </div>
         </div>
       </div>
 
-      {/* 🎯 CORE HIGHLIGHT: AI 시대 최적의 업무 카테고리 3선 */}
-      <div className="mb-10 p-6 sm:p-8 rounded-3xl bg-gradient-to-b from-slate-900 via-slate-950 to-slate-900 border border-emerald-500/40 shadow-2xl relative overflow-hidden">
-        <div className="absolute top-0 right-0 w-96 h-96 bg-emerald-500/5 rounded-full blur-3xl pointer-events-none" />
+      {/* 종합 해설 (Grand Synthesis) */}
+      <div className="p-6 sm:p-8 rounded-3xl bg-slate-900/90 border border-slate-800 mb-10 shadow-xl">
+        <div className="flex items-center gap-2 mb-4">
+          <BrainCircuit className="w-5 h-5 text-cyan-400" />
+          <h2 className="text-lg font-bold text-slate-100 font-serif">
+            자비스의 종합 연대기 판정
+          </h2>
+        </div>
+        <div className="text-sm sm:text-base text-slate-300 leading-relaxed whitespace-pre-line font-light">
+          {result.grandSynthesis}
+        </div>
+      </div>
 
-        <div className="flex flex-col sm:flex-row items-start sm:items-center justify-between pb-4 mb-6 border-b border-slate-800 gap-2">
-          <div>
-            <div className="flex items-center gap-2 text-emerald-400 mb-1">
-              <Cpu className="w-5 h-5" />
-              <span className="text-xs font-mono font-bold tracking-wider uppercase">
-                AI-Era Best Fit Work Domains
-              </span>
-            </div>
-            <h3 className="text-lg sm:text-xl font-bold text-slate-100 font-serif">
-              당신의 기질과 취향이 폭발하는 AI 시대 업무 카테고리
-            </h3>
-          </div>
-          <span className="text-xs font-medium text-slate-400 bg-slate-800/80 px-3 py-1.5 rounded-xl border border-slate-700">
-            10년 경력직이 아닌 지금 당장 시작할 수 있는 현실적 영역
-          </span>
+      {/* 3단계 상세: Sir가 "좋다"고 직접 승인한 최적의 경로 */}
+      <div className="mb-10">
+        <div className="flex items-center gap-2 mb-4">
+          <CheckCircle2 className="w-5 h-5 text-emerald-400" />
+          <h2 className="text-lg sm:text-xl font-bold text-slate-100 font-serif">
+            Sir가 본능적으로 승인한 최적의 역할 & 분야
+          </h2>
         </div>
 
-        <div className="grid grid-cols-1 gap-5">
-          {result.aiWorkDomains?.map((domain, idx) => (
-            <div
-              key={idx}
-              className="p-5 rounded-2xl bg-slate-950 border border-slate-800 hover:border-emerald-500/40 transition-all shadow-md flex flex-col justify-between"
-            >
-              <div>
-                <div className="flex flex-wrap items-center justify-between gap-2 mb-2">
-                  <h4 className="text-base font-bold text-emerald-300 flex items-center gap-2">
-                    <span className="w-6 h-6 rounded-lg bg-emerald-950 border border-emerald-700/60 text-xs font-mono font-bold flex items-center justify-center text-emerald-400">
-                      0{idx + 1}
+        {result.selectedBestRoles.length === 0 ? (
+          <div className="p-6 rounded-2xl bg-slate-900/60 border border-slate-800 text-slate-400 text-sm text-center">
+            기성 카테고리에 속한 역할을 모두 배제하셨습니다. 기존의 정형화된 틀을 벗어나 Sir만의 고유한 복합 영역을 스스로 개척하실 때 가장 큰 에너지가 발현됩니다.
+          </div>
+        ) : (
+          <div className="grid grid-cols-1 md:grid-cols-2 gap-4">
+            {result.selectedBestRoles.map((role) => (
+              <div
+                key={role.id}
+                className="p-5 rounded-2xl bg-slate-900/95 border border-emerald-500/40 shadow-lg flex flex-col justify-between"
+              >
+                <div>
+                  <div className="flex items-center justify-between gap-2 mb-2">
+                    <span className="px-2 py-0.5 rounded-md bg-emerald-950/80 border border-emerald-500/50 text-emerald-300 text-[11px] font-mono font-semibold">
+                      승인된 최적 경로
                     </span>
-                    <span>{domain.category}</span>
-                  </h4>
-                  <div className="flex flex-wrap gap-1.5">
-                    {domain.recommendedTools.map((tool, tIdx) => (
-                      <span
-                        key={tIdx}
-                        className="text-[11px] font-mono px-2 py-0.5 rounded-md bg-slate-900 text-slate-300 border border-slate-800"
-                      >
-                        {tool}
-                      </span>
-                    ))}
+                  </div>
+                  <h3 className="text-base font-bold text-slate-100 font-serif mb-1">
+                    {role.title}
+                  </h3>
+                  <p className="text-xs text-emerald-300/90 italic font-serif mb-3">
+                    &ldquo;{role.tagline}&rdquo;
+                  </p>
+                  <p className="text-xs text-slate-300 leading-relaxed mb-3">
+                    {role.description}
+                  </p>
+
+                  <div className="space-y-2 py-2 border-t border-slate-800/80 text-xs">
+                    <div>
+                      <span className="font-semibold text-slate-400">매칭 이유:</span>{' '}
+                      <span className="text-slate-300 font-light">{role.fitReason}</span>
+                    </div>
+                    <div>
+                      <span className="font-semibold text-slate-400">일상의 현실:</span>{' '}
+                      <span className="text-slate-300 font-light">{role.dailyReality}</span>
+                    </div>
                   </div>
                 </div>
 
-                <p className="text-xs sm:text-sm text-slate-300 leading-relaxed font-light mb-3">
-                  <strong className="text-slate-200 font-semibold">왜 나에게 맞는가: </strong>
-                  {domain.fitReason}
-                </p>
+                <div className="mt-4 pt-3 border-t border-slate-800 text-xs text-cyan-300 bg-cyan-950/30 p-2.5 rounded-xl border border-cyan-800/30">
+                  <span className="font-bold">오늘의 첫걸음:</span> {role.requiredAction}
+                </div>
               </div>
+            ))}
+          </div>
+        )}
+      </div>
 
-              <div className="pt-3 border-t border-slate-900 flex items-start gap-2 text-xs text-emerald-300/90 bg-emerald-950/20 p-2.5 rounded-xl border border-emerald-900/40">
-                <Check className="w-3.5 h-3.5 text-emerald-400 shrink-0 mt-0.5" />
-                <span>
-                  <strong className="font-semibold text-emerald-200">오늘의 첫걸음: </strong>
-                  {domain.actionItem}
-                </span>
+      {/* 3단계 상세: Sir가 "싫다"고 사전에 걸러낸 경로 */}
+      {result.discardedRoles.length > 0 && (
+        <div className="mb-10">
+          <div className="flex items-center gap-2 mb-3">
+            <XCircle className="w-4 h-4 text-rose-400" />
+            <h3 className="text-sm font-bold text-slate-300 font-serif">
+              사전에 과감히 걸러낸 비선호 / 에너지 고갈 영역
+            </h3>
+          </div>
+          <div className="grid grid-cols-1 sm:grid-cols-2 gap-3">
+            {result.discardedRoles.map((role) => (
+              <div
+                key={role.id}
+                className="p-3.5 rounded-xl bg-slate-950/70 border border-rose-900/30 text-xs text-slate-400"
+              >
+                <div className="font-bold text-rose-300/90 mb-1">{role.title}</div>
+                <div className="font-light text-slate-400">{role.tagline}</div>
               </div>
-            </div>
-          ))}
+            ))}
+          </div>
+        </div>
+      )}
+
+      {/* 양대 레이더 시각화 (기질 밸런스 & 취향 스펙트럼) */}
+      <div className="grid grid-cols-1 md:grid-cols-2 gap-6 mb-12">
+        <div className="p-6 rounded-3xl bg-slate-900/90 border border-slate-800 shadow-xl flex flex-col items-center">
+          <h3 className="text-sm font-bold text-cyan-300 font-mono mb-2">
+            1단계 기질 밸런스 레이더
+          </h3>
+          <CompassRadar data={result.temperamentRadar} color="#06b6d4" />
+        </div>
+
+        <div className="p-6 rounded-3xl bg-slate-900/90 border border-slate-800 shadow-xl flex flex-col items-center">
+          <h3 className="text-sm font-bold text-amber-400 font-mono mb-2">
+            2단계 취향 스펙트럼 레이더
+          </h3>
+          <CompassRadar data={result.tasteRadar} color="#f59e0b" fillOpacity={0.4} />
         </div>
       </div>
 
-      {/* AI Collaboration Guide & Core Philosophy */}
-      <div className="grid grid-cols-1 md:grid-cols-2 gap-6 mb-10">
-        {/* AI Collaboration Recipe */}
-        <div className="p-6 rounded-2xl bg-slate-900 border border-cyan-500/30 flex flex-col justify-between shadow-lg">
-          <div>
-            <div className="flex items-center gap-2 mb-3 text-cyan-400">
-              <Wrench className="w-4 h-4" />
-              <h4 className="text-sm font-bold text-slate-200">
-                내 기질 맞춤 AI 협업 가이드 (AI Recipe)
-              </h4>
-            </div>
-            <p className="text-xs sm:text-sm text-slate-300 leading-relaxed font-light">
-              {result.aiCollaborationGuide}
-            </p>
-          </div>
-          <div className="mt-4 pt-3 border-t border-slate-800 text-[11px] text-cyan-400 font-mono">
-            💡 AI를 부하가 아닌 강력한 레버리지로 부리는 법
-          </div>
-        </div>
-
-        {/* Core Philosophy & Decision Pattern */}
-        <div className="p-6 rounded-2xl bg-slate-900 border border-slate-800 flex flex-col justify-between shadow-lg">
-          <div>
-            <div className="flex items-center gap-2 mb-2 text-amber-400">
-              <Sparkles className="w-4 h-4" />
-              <h4 className="text-sm font-bold text-slate-200">핵심 기질 철학</h4>
-            </div>
-            <p className="text-xs sm:text-sm text-slate-300 leading-relaxed font-light mb-4">
-              {result.corePhilosophy}
-            </p>
-
-            <div className="flex items-center gap-2 mb-2 text-cyan-400">
-              <Zap className="w-4 h-4" />
-              <h4 className="text-sm font-bold text-slate-200">의사결정 시퀀스</h4>
-            </div>
-            <p className="text-xs text-cyan-200/90 font-mono bg-slate-950 p-2.5 rounded-xl border border-slate-800 leading-relaxed">
-              {result.decisionPattern}
-            </p>
-          </div>
-          <div className="mt-4 pt-3 border-t border-slate-800 text-[11px] text-amber-400 font-mono">
-            ⚖️ 흔들리지 않는 내면의 판단 기준선
-          </div>
-        </div>
-      </div>
-
-      {/* 5-D Radar & Blind Spots */}
-      <div className="grid grid-cols-1 md:grid-cols-2 gap-6 mb-10">
-        {/* Radar Chart */}
-        <div className="p-6 rounded-2xl bg-slate-900 border border-slate-800 flex flex-col justify-between shadow-lg">
-          <div className="flex items-center gap-2 mb-2 text-cyan-400">
-            <BrainCircuit className="w-4 h-4" />
-            <h4 className="text-sm font-bold text-slate-200">
-              내면 나침반 5차원 방위도
-            </h4>
-          </div>
-          <CompassRadar data={result.radarData} />
-          <div className="mt-2 text-center text-xs text-slate-400">
-            시련의 선택이 축적된 5대 고유 나침반 지표
-          </div>
-        </div>
-
-        {/* Blind Spots */}
-        <div className="p-6 rounded-2xl bg-slate-900 border border-slate-800 flex flex-col justify-between shadow-lg">
-          <div>
-            <div className="flex items-center gap-2 mb-3 text-rose-400">
-              <AlertTriangle className="w-4 h-4" />
-              <h4 className="text-sm font-bold text-slate-200">
-                내면의 나침반 사각지대 (주의점)
-              </h4>
-            </div>
-            <ul className="space-y-2.5 text-xs text-slate-300">
-              {result.blindSpots?.map((spot, idx) => (
-                <li
-                  key={idx}
-                  className="flex items-start gap-2 bg-slate-950 p-3 rounded-xl border border-slate-800/60 leading-relaxed"
-                >
-                  <span className="text-rose-400 font-bold">•</span>
-                  <span>{spot}</span>
-                </li>
-              ))}
-            </ul>
-          </div>
-          <div className="mt-4 pt-3 border-t border-slate-800 text-[11px] text-rose-400 font-mono">
-            ⚠️ 번아웃과 방향 상실을 막아주는 안전판
-          </div>
-        </div>
-      </div>
-
-      {/* JARVIS Chronicle Epilogue */}
-      <div className="mb-10 p-6 sm:p-8 rounded-3xl bg-gradient-to-r from-slate-900 via-slate-900/90 to-cyan-950/40 border border-cyan-500/40 shadow-xl">
-        <div className="flex items-center gap-2 text-cyan-400 mb-3">
-          <Compass className="w-4 h-4" />
-          <span className="text-xs font-mono font-bold uppercase tracking-wider">
-            JARVIS Chronicle Epilogue
-          </span>
-        </div>
-        <p className="text-xs sm:text-sm text-slate-200 leading-relaxed font-serif whitespace-pre-line">
-          {result.jarvisChronicleEpilogue}
-        </p>
-      </div>
-
-      {/* Action Footer */}
-      <div className="flex flex-wrap items-center justify-center gap-4">
+      {/* Bottom Action Bar */}
+      <div className="flex flex-col sm:flex-row items-center justify-between gap-4 p-5 rounded-2xl bg-slate-900 border border-slate-800">
         <button
-          onClick={handleShare}
-          className="flex items-center gap-2 px-5 py-3 rounded-xl bg-slate-800 hover:bg-slate-700 text-slate-200 text-xs font-semibold border border-slate-700 transition-all"
-        >
-          <Share2 className="w-4 h-4" />
-          <span>{copied ? '연대기 링크 복사 완료!' : '연대기 결과 공유'}</span>
-        </button>
-
-        <Link
-          href="/trials"
-          onClick={() => resetQuest()}
-          className="flex items-center gap-2 px-6 py-3 rounded-xl bg-cyan-600 hover:bg-cyan-500 text-slate-950 text-xs font-bold transition-all shadow-md"
+          onClick={resetQuest}
+          className="w-full sm:w-auto flex items-center justify-center gap-2 px-5 py-2.5 rounded-xl bg-slate-800 hover:bg-slate-700 text-slate-200 text-xs sm:text-sm font-semibold transition-all"
         >
           <RotateCcw className="w-4 h-4" />
-          <span>시련의 나침반 다시 작동하기 (처음부터)</span>
-        </Link>
+          <span>시련 처음부터 다시 시작</span>
+        </button>
+
+        <div className="flex items-center gap-3 w-full sm:w-auto">
+          <button
+            onClick={handleShare}
+            className="w-full sm:w-auto flex items-center justify-center gap-2 px-5 py-2.5 rounded-xl bg-cyan-950/80 hover:bg-cyan-900 border border-cyan-700 text-cyan-200 text-xs sm:text-sm font-semibold transition-all"
+          >
+            {copied ? (
+              <>
+                <Check className="w-4 h-4 text-emerald-400" />
+                <span>링크 복사 완료!</span>
+              </>
+            ) : (
+              <>
+                <Share2 className="w-4 h-4" />
+                <span>결과 공유 링크</span>
+              </>
+            )}
+          </button>
+        </div>
       </div>
     </div>
   );

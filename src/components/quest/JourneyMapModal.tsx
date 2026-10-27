@@ -12,7 +12,7 @@ interface JourneyMapModalProps {
 }
 
 export const JourneyMapModal: React.FC<JourneyMapModalProps> = ({ isOpen, onClose }) => {
-  const { currentTrialId, history, decisions, rewindTo } = useQuestStore();
+  const { currentTrialId, history, decisions, rewindTo, dynamicStep3Trials } = useQuestStore();
 
   const handleRewind = (trialId: string) => {
     if (confirm('이 시련의 분기점으로 여정을 되감으시겠습니까? 이후의 결정은 새롭게 재구성됩니다.')) {
@@ -61,7 +61,7 @@ export const JourneyMapModal: React.FC<JourneyMapModalProps> = ({ isOpen, onClos
             {/* Trial Path Timeline */}
             <div className="mt-4 flex-1 overflow-y-auto space-y-3 pr-1">
               {allEncountered.map((tId, idx) => {
-                const trial = getResolvedTrial(tId, decisions);
+                const trial = getResolvedTrial(tId, dynamicStep3Trials);
                 if (!trial) return null;
                 const isCurrent = tId === currentTrialId;
                 const decision = decisions[tId];
@@ -122,7 +122,7 @@ export const JourneyMapModal: React.FC<JourneyMapModalProps> = ({ isOpen, onClos
             <div className="mt-4 pt-3 border-t border-slate-800 flex items-center justify-between text-xs text-slate-400">
               <span>통과한 관문: {history.length}개</span>
               <span className="text-cyan-400 font-mono">
-                코어 엔진: 기질 ➔ 취향 ➔ AI 시대 적합성
+                코어 엔진: 기질 ➔ 취향 ➔ 추천 & 호불호 검증
               </span>
             </div>
           </motion.div>

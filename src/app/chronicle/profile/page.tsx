@@ -4,22 +4,29 @@ import React from 'react';
 import Link from 'next/link';
 import { motion } from 'framer-motion';
 import {
-  Award,
   Shield,
-  Zap,
+  Heart,
+  Target,
   CheckCircle2,
-  ArrowRight,
-  Sparkles,
+  XCircle,
   Compass,
-  Scroll,
-  Cpu
+  Scroll
 } from 'lucide-react';
 import { useQuestStore } from '@/store/useQuestStore';
 import { synthesizeChronicle } from '@/data/story/archetypesMaster';
 
 export default function ProfileArchivePage() {
-  const { chronicleResult, scores, resetQuest } = useQuestStore();
-  const result = chronicleResult || synthesizeChronicle(scores);
+  const {
+    chronicleResult,
+    temperamentScores,
+    tasteScores,
+    judgedRoles,
+    resetQuest
+  } = useQuestStore();
+
+  const result =
+    chronicleResult ||
+    synthesizeChronicle(temperamentScores, tasteScores, judgedRoles);
 
   return (
     <div className="flex-1 max-w-4xl mx-auto px-4 sm:px-6 py-10 sm:py-14 w-full">
@@ -27,14 +34,14 @@ export default function ProfileArchivePage() {
       <div className="text-center mb-10">
         <div className="inline-flex items-center gap-2 px-3.5 py-1.5 rounded-full bg-cyan-950/80 border border-cyan-500/40 text-cyan-300 text-xs font-semibold mb-4">
           <Compass className="w-3.5 h-3.5" />
-          <span>내면의 나침반 프로필 아카이브</span>
+          <span>기질 & 취향 종합 프로필 아카이브</span>
         </div>
 
         <h1 className="text-2xl sm:text-4xl font-extrabold text-slate-100 font-serif tracking-tight">
-          {result.grandTitle}
+          {result.temperament.title}
         </h1>
         <p className="mt-3 text-sm text-cyan-300 font-serif italic max-w-xl mx-auto">
-          &ldquo;{result.grandEpithet}&rdquo;
+          &ldquo;{result.temperament.epithet}&rdquo;
         </p>
       </div>
 
@@ -49,20 +56,20 @@ export default function ProfileArchivePage() {
             <div className="flex items-center gap-2 text-cyan-400">
               <Shield className="w-4 h-4" />
               <span className="text-xs font-mono font-bold uppercase tracking-wider">
-                {result.step1.stepName}
+                STEP 1. 근본 기질 & 성향
               </span>
             </div>
             <span className="text-xs font-mono text-cyan-300/80">
-              {result.step1.englishTitle}
+              Origin Temperament
             </span>
           </div>
 
           <h2 className="text-xl sm:text-2xl font-bold text-slate-100 font-serif mb-3">
-            [{result.step1.archetypeTitle}]
+            [{result.temperament.title}]
           </h2>
 
           <p className="text-sm sm:text-base text-slate-300 leading-relaxed font-light mb-6">
-            {result.step1.summary}
+            {result.temperament.deepEngine}
           </p>
 
           <div className="pt-4 border-t border-slate-800/80">
@@ -70,7 +77,7 @@ export default function ProfileArchivePage() {
               핵심 기질 특성 (Core Traits)
             </h4>
             <div className="grid grid-cols-1 sm:grid-cols-2 gap-2.5">
-              {result.step1.coreTraits.map((trait, idx) => (
+              {result.temperament.coreTraits.map((trait, idx) => (
                 <div
                   key={idx}
                   className="flex items-center gap-2 p-2.5 rounded-xl bg-slate-950 border border-slate-800/80 text-xs text-slate-200"
@@ -83,7 +90,7 @@ export default function ProfileArchivePage() {
           </div>
         </motion.div>
 
-        {/* STEP 2 Pillar: 몰입 취향 */}
+        {/* STEP 2 Pillar: 관심 취향 */}
         <motion.div
           initial={{ opacity: 0, y: 15 }}
           animate={{ opacity: 1, y: 0 }}
@@ -92,43 +99,37 @@ export default function ProfileArchivePage() {
         >
           <div className="flex items-center justify-between pb-4 mb-5 border-b border-slate-800">
             <div className="flex items-center gap-2 text-amber-400">
-              <Zap className="w-4 h-4" />
+              <Heart className="w-4 h-4" />
               <span className="text-xs font-mono font-bold uppercase tracking-wider">
-                {result.step2.stepName}
+                STEP 2. 관심 취향 & 테마
               </span>
             </div>
             <span className="text-xs font-mono text-amber-300/80">
-              {result.step2.englishTitle}
+              Taste & Domain
             </span>
           </div>
 
           <h2 className="text-xl sm:text-2xl font-bold text-slate-100 font-serif mb-3">
-            [{result.step2.archetypeTitle}]
+            [{result.taste.primaryDomain}]
           </h2>
 
           <p className="text-sm sm:text-base text-slate-300 leading-relaxed font-light mb-6">
-            {result.step2.summary}
+            {result.taste.tasteSummary}
           </p>
 
-          <div className="pt-4 border-t border-slate-800/80">
-            <h4 className="text-xs font-bold text-slate-300 uppercase tracking-wider mb-3">
-              몰입 및 동기 특성 (Drive Traits)
-            </h4>
-            <div className="grid grid-cols-1 sm:grid-cols-2 gap-2.5">
-              {result.step2.coreTraits.map((trait, idx) => (
-                <div
-                  key={idx}
-                  className="flex items-center gap-2 p-2.5 rounded-xl bg-slate-950 border border-slate-800/80 text-xs text-slate-200"
-                >
-                  <CheckCircle2 className="w-3.5 h-3.5 text-amber-400 shrink-0" />
-                  <span>{trait}</span>
-                </div>
-              ))}
+          <div className="pt-4 border-t border-slate-800/80 space-y-2 text-xs">
+            <div>
+              <span className="text-amber-400 font-bold">선호 활동 양식:</span>{' '}
+              <span className="text-slate-300">{result.taste.preferredActivityStyle}</span>
+            </div>
+            <div>
+              <span className="text-amber-400 font-bold">지적 몰입 촉매:</span>{' '}
+              <span className="text-slate-300">{result.taste.intellectualCatalyst}</span>
             </div>
           </div>
         </motion.div>
 
-        {/* STEP 3 Pillar: AI 시대 적합 업무 영역 */}
+        {/* STEP 3 Pillar: 자가 검증 경로 */}
         <motion.div
           initial={{ opacity: 0, y: 15 }}
           animate={{ opacity: 1, y: 0 }}
@@ -137,42 +138,52 @@ export default function ProfileArchivePage() {
         >
           <div className="flex items-center justify-between pb-4 mb-5 border-b border-slate-800">
             <div className="flex items-center gap-2 text-emerald-400">
-              <Cpu className="w-4 h-4" />
+              <Target className="w-4 h-4" />
               <span className="text-xs font-mono font-bold uppercase tracking-wider">
-                {result.step3.stepName}
+                STEP 3. 자가 검증 최적 경로
               </span>
             </div>
             <span className="text-xs font-mono text-emerald-300/80">
-              {result.step3.englishTitle}
+              Verified Path
             </span>
           </div>
 
-          <h2 className="text-xl sm:text-2xl font-bold text-slate-100 font-serif mb-3">
-            [{result.step3.archetypeTitle}]
-          </h2>
-
-          <p className="text-sm sm:text-base text-slate-300 leading-relaxed font-light mb-6">
-            {result.step3.summary}
-          </p>
-
-          <div className="pt-4 border-t border-slate-800/80">
-            <h4 className="text-xs font-bold text-slate-300 uppercase tracking-wider mb-3">
-              추천 업무 카테고리
+          <div className="space-y-4">
+            <h4 className="text-xs font-bold text-slate-300 uppercase tracking-wider">
+              Sir가 직접 승인한 경로 ({result.selectedBestRoles.length}개)
             </h4>
             <div className="grid grid-cols-1 gap-2.5">
-              {result.aiWorkDomains?.map((domain, idx) => (
+              {result.selectedBestRoles.map((role, idx) => (
                 <div
                   key={idx}
-                  className="p-3 rounded-xl bg-slate-950 border border-slate-800 text-xs text-slate-200 flex items-start gap-2"
+                  className="p-3.5 rounded-xl bg-slate-950 border border-emerald-500/30 text-xs text-slate-200"
                 >
-                  <span className="text-emerald-400 font-bold font-mono">#{idx + 1}</span>
-                  <div>
-                    <span className="font-semibold text-emerald-300">{domain.category}: </span>
-                    <span className="text-slate-300">{domain.fitReason}</span>
+                  <div className="font-bold text-emerald-300 mb-1">{role.title}</div>
+                  <div className="text-slate-300 mb-2">{role.description}</div>
+                  <div className="text-[11px] text-cyan-300">
+                    <span className="font-semibold">첫 실행 액션:</span> {role.requiredAction}
                   </div>
                 </div>
               ))}
             </div>
+
+            {result.discardedRoles.length > 0 && (
+              <div className="pt-3 border-t border-slate-800">
+                <h4 className="text-xs font-bold text-rose-400 uppercase tracking-wider mb-2">
+                  사전에 배제한 비선호 영역 ({result.discardedRoles.length}개)
+                </h4>
+                <div className="flex flex-wrap gap-2">
+                  {result.discardedRoles.map((role) => (
+                    <span
+                      key={role.id}
+                      className="px-2.5 py-1 rounded-lg bg-slate-950 border border-rose-900/40 text-[11px] text-slate-400"
+                    >
+                      {role.title}
+                    </span>
+                  ))}
+                </div>
+              </div>
+            )}
           </div>
         </motion.div>
       </div>

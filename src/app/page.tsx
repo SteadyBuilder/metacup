@@ -119,10 +119,10 @@ export default function HomePage() {
                 <span className="text-xs text-slate-400 font-mono">기질 진단</span>
               </div>
               <h3 className="text-base font-bold text-slate-100 font-serif mb-2">
-                근본 기질 파악
+                근본 기질 & 성향 규명
               </h3>
               <p className="text-xs text-slate-300 leading-relaxed font-light">
-                지휘관이나 리더 프레임이 아닌, 문제와 지식을 대하는 나 자신의 순수한 내면 엔진(탐구형/실용구축형/감각창작형/공감조율형)을 발견합니다.
+                세상과 문제를 대하는 인지 방식, 에너지 충전의 원천, 의사결정의 잣대, 위기 반응을 해체하여 나만의 날것의 내면 엔진을 발견합니다.
               </p>
             </div>
             <div className="mt-4 pt-3 border-t border-slate-900 text-[11px] text-cyan-300/80 font-mono">
@@ -137,13 +137,13 @@ export default function HomePage() {
                 <span className="text-[11px] font-mono font-bold text-amber-400 bg-amber-950 px-2.5 py-0.5 rounded-full border border-amber-800/80">
                   STEP 02 (🔒 언락)
                 </span>
-                <span className="text-xs text-slate-400 font-mono">동기 분석</span>
+                <span className="text-xs text-slate-400 font-mono">취향 분석</span>
               </div>
               <h3 className="text-base font-bold text-slate-100 font-serif mb-2">
-                취향 & 몰입 동기
+                취향 & 관심 주제 탐색
               </h3>
               <p className="text-xs text-slate-300 leading-relaxed font-light">
-                시간 가는 줄 모르고 빠져드는 작업 환경, 에너지가 솟구치는 순간(시스템 자동화, 감각적 창작, 즉각적 실체화, 사람 간 연결)을 파악합니다.
+                어떤 지적 테마(기술 시스템, 인간 심리, 비즈니스 자본, 감각 미학)에 가슴이 뛰고, 어떤 활동 양식을 사랑하는지 스펙트럼을 파악합니다.
               </p>
             </div>
             <div className="mt-4 pt-3 border-t border-slate-900 text-[11px] text-amber-300/80 font-mono flex items-center gap-1">
@@ -159,18 +159,18 @@ export default function HomePage() {
                 <span className="text-[11px] font-mono font-bold text-emerald-400 bg-emerald-950 px-2.5 py-0.5 rounded-full border border-emerald-800/80">
                   STEP 03 (🔒 언락)
                 </span>
-                <span className="text-xs text-slate-400 font-mono">업무 매칭</span>
+                <span className="text-xs text-slate-400 font-mono">자가 검증</span>
               </div>
               <h3 className="text-base font-bold text-slate-100 font-serif mb-2">
-                AI 시대 적합 업무 영역
+                추천 분야 호불호 검증
               </h3>
               <p className="text-xs text-slate-300 leading-relaxed font-light">
-                10년 경력직 타이틀이 아닌, AI라는 날개를 달았을 때 지금 당장 시작할 수 있는 최적의 현실적 업무 카테고리와 구체적 실행 도구를 도출합니다.
+                기질과 취향의 교차 알고리즘으로 도출된 현실의 역할들을 직접 마주하고, 본능의 호불호(좋다/싫다)를 통해 최적의 길을 최종 확정합니다.
               </p>
             </div>
             <div className="mt-4 pt-3 border-t border-slate-900 text-[11px] text-emerald-300/80 font-mono flex items-center gap-1">
               <Cpu className="w-3 h-3 text-emerald-400" />
-              <span>현실적 1인 메이커/영역 제안</span>
+              <span>본능적 승인 및 필터링</span>
             </div>
           </div>
         </div>

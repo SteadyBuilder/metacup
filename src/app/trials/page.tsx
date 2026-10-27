@@ -26,13 +26,14 @@ export default function TrialsPage() {
     history,
     rewindToPrevious,
     unlockModal,
-    proceedFromUnlock
+    proceedFromUnlock,
+    dynamicStep3Trials
   } = useQuestStore();
 
   const [isMapOpen, setIsMapOpen] = useState(false);
   const [lastReaction, setLastReaction] = useState<string | null>(null);
 
-  const trial = getResolvedTrial(currentTrialId, decisions);
+  const trial = getResolvedTrial(currentTrialId, dynamicStep3Trials);
 
   // When quest completes, navigate to chronicle
   useEffect(() => {

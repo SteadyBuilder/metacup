@@ -1,517 +1,251 @@
-import { Trial, StepProfile, CompassDimension } from '@/types/quest';
+import { Trial, TemperamentDimension, TemperamentProfile } from '@/types/quest';
 
 export const STEP1_TRIALS: Record<string, Trial> = {
-  // ⚔️ Scene 01: 안개 걷힌 광장 (첫 반응 / 호기심 vs 상황 파악)
-  't1_1': {
+  t1_1: {
     id: 't1_1',
     step: 1,
-    stepTitle: 'STEP 1: 근본 기질 (Core Temperament)',
+    stepTitle: '1단계: 근본 기질 규명',
     trialNumber: 1,
-    chapterTitle: '제1막: 안개 걷힌 미지의 광장',
+    chapterTitle: '미지의 회랑 (인식의 시발점)',
     backgroundScene:
-      '안개가 서서히 걷히고, 난생처음 보는 낯선 세계의 광장 한가운데에 홀로 도착했습니다.',
-    fx: 'none',
-    options: [
-      {
-        id: 'A',
-        text: '"오, 흥미진진한데? 일단 주변부터 둘러보며 발길 닿는 대로 가보자."',
-        whisper: {
-          gain: '즉각적인 탐험과 새로운 가능성의 발견',
-          cost: '예상치 못한 위험에 무방비로 노출될 위험'
-        },
-        weights: { creativity: 3, execution: 2 },
-        nextTrialId: 't1_2',
-        reactionText: '호기심에 이끌려 발길 닿는 대로 첫 발을 내딛자 낯선 공기가 온몸을 감쌌다.'
-      },
-      {
-        id: 'B',
-        text: '"잠깐, 멈춰 서서 여기가 어디인지, 안전한 곳인지 상황 파악부터 하자."',
-        whisper: {
-          gain: '불필요한 위험을 줄이는 냉철한 안전 확보',
-          cost: '초기 탐험과 기동의 일시적 지연'
-        },
-        weights: { strategic: 3, resilience: 2 },
-        nextTrialId: 't1_2',
-        reactionText: '발걸음을 멈추고 사방의 지형과 공기의 흐름을 차분히 살폈다.'
-      }
-    ]
-  },
-
-  // ⚔️ Scene 02: 갈림길 앞에서의 의사결정 (직관 vs 단서)
-  't1_2': {
-    id: 't1_2',
-    step: 1,
-    stepTitle: 'STEP 1: 근본 기질 (Core Temperament)',
-    trialNumber: 2,
-    chapterTitle: '제2막: 갈림길 앞의 결단',
-    backgroundScene:
-      '광장 끝에 다다르자, 어두운 숲길과 가파른 절벽 길 두 갈래 길이 나타났습니다. 양쪽 모두 위험과 기회가 공존해 보입니다.',
-    fx: 'none',
-    options: [
-      {
-        id: 'A',
-        text: '"이유는 모르겠지만 저쪽 길이 더 끌려. 내 감과 첫인상을 믿고 일단 발걸음을 옮기자."',
-        whisper: {
-          gain: '망설임 없는 신속한 결단과 영감의 흐름',
-          cost: '객관적인 근거 부족으로 인한 시행착오 가능성'
-        },
-        weights: { creativity: 3, strategic: 1 },
-        nextTrialId: 't1_3',
-        reactionText: '내면의 이끌림에 몸을 맡기고 망설임 없이 길을 정했다.'
-      },
-      {
-        id: 'B',
-        text: '"표지판 흔적이나 앞서간 사람들의 발자국, 바람의 냄새 같은 객관적인 단서를 먼저 찾아본 뒤 결정하자."',
-        whisper: {
-          gain: '검증된 실마리를 통한 안전하고 확실한 경로 선택',
-          cost: '단서를 수집하고 비교하는 시간 소모'
-        },
-        weights: { strategic: 3, execution: 2 },
-        nextTrialId: 't1_3',
-        reactionText: '바닥의 흔적과 표식을 짚어보자 가장 타당한 길이 눈에 들어왔다.'
-      }
-    ]
-  },
-
-  // ⚔️ Scene 03: 낯선 여행자와의 조우 (독립성 vs 연대 본능)
-  't1_3': {
-    id: 't1_3',
-    step: 1,
-    stepTitle: 'STEP 1: 근본 기질 (Core Temperament)',
-    trialNumber: 3,
-    chapterTitle: '제3막: 모닥불 앞의 여행자',
-    backgroundScene:
-      '선택한 길을 한참 걷다 보니, 저 멀리 모닥불 앞에 웅크리고 있는 낯선 여행자가 보입니다. 그 역시 이 세계에 떨어진 모험가로 보입니다.',
-    fx: 'none',
-    options: [
-      {
-        id: 'A',
-        text: '"상대가 누구인지, 무슨 속셈이 있는지 알 수 없다. 내 페이스를 방해받지 않고 혼자 은밀하게 지나가는 게 훨씬 안전하고 편해."',
-        whisper: {
-          gain: '나만의 온전한 통제권과 불필요한 마찰 방지',
-          cost: '타인에게서 얻을 수 있는 정보나 도움의 포기'
-        },
-        weights: { resilience: 3, strategic: 2 },
-        nextTrialId: 't1_4',
-        reactionText: '기척을 숨기고 조용히 거리를 유지한 채 발걸음을 재촉했다.'
-      },
-      {
-        id: 'B',
-        text: '"이 낯선 곳에서 동행이나 정보는 큰 힘이 된다. 가벼운 인사를 건네며 모닥불을 쬐고 서로 가진 실마리를 나눠보자."',
-        whisper: {
-          gain: '새로운 정보 획득과 든든한 상호 연대의 기회',
-          cost: '상대의 예측 불가능한 의도와 에너지 소모'
-        },
-        weights: { collaboration: 3, execution: 1 },
-        nextTrialId: 't1_4',
-        reactionText: '모닥불을 향해 다가가 인사를 건네며 경계의 벽을 낮췄다.'
-      }
-    ]
-  },
-
-  // ⚔️ Scene 04: 막다른 벽 앞에서의 돌파 (정면 돌파 vs 우회 기동)
-  't1_4': {
-    id: 't1_4',
-    step: 1,
-    stepTitle: 'STEP 1: 근본 기질 (Core Temperament)',
-    trialNumber: 4,
-    chapterTitle: '제4막: 가로막힌 통로',
-    backgroundScene:
-      '여행자를 뒤로하고 홀로 길을 걷던 중, 마침내 목적지로 이어지는 유일한 통로에 다다랐습니다. 그런데 거대한 낙석이 무너져 내려 통로 전체가 완전히 가로막혀 있습니다. 주변은 가파른 바위산입니다.',
-    fx: 'none',
-    options: [
-      {
-        id: 'A',
-        text: '"원래 가려던 길이다. 바위 틈새를 찾아 파내거나, 위험을 감수하더라도 낙석을 타고 넘어가 끝장을 봐야 직성이 풀려."',
-        whisper: {
-          gain: '본래의 방향을 관철하는 우직한 집념과 돌파',
-          cost: '무리한 체력 소모와 부상의 위험'
-        },
-        weights: { resilience: 3, execution: 2 },
-        nextTrialId: 't1_5',
-        reactionText: '무너진 돌무더기에 손을 얹고 정면으로 맞설 틈을 노려보았다.'
-      },
-      {
-        id: 'B',
-        text: '"막힌 곳에 힘을 빼는 건 비효율적이다. 한 발 물러서서 산을 돌아가는 우회로나 전혀 다른 샛길을 찾아 빠르게 발길을 돌리자."',
-        whisper: {
-          gain: '불필요한 소모를 줄이는 유연한 상황 적응력',
-          cost: '새로운 샛길에서 마주칠 미지의 변수'
-        },
-        weights: { strategic: 3, execution: 2 },
-        nextTrialId: 't1_5',
-        reactionText: '미련 없이 몸을 돌려 가파른 산등성이 샛길을 찾아 나섰다.'
-      }
-    ]
-  },
-
-  // ⚔️ Scene 05: 숨겨진 동굴의 보상 (지적 탐구 vs 실용적 실리)
-  't1_5': {
-    id: 't1_5',
-    step: 1,
-    stepTitle: 'STEP 1: 근본 기질 (Core Temperament)',
-    trialNumber: 5,
-    chapterTitle: '제5막: 유적의 비밀 동굴',
-    backgroundScene:
-      '막힌 낙석을 피해 가파른 산등성이 샛길을 돌아가던 중, 덤불 뒤에 숨겨진 오래된 유적의 비밀 동굴을 우연히 발견했습니다. 안으로 들어서자 두 개의 제단이 놓여 있습니다.',
+      '안개 자욱한 미지의 거대한 고대 구조물 앞에 섰다. 단 한 번도 본 적 없는 기괴한 메커니즘이 침묵 속에 맞물려 있다. 앞서간 이들의 흔적은 끊겼고, 당신은 이 문을 열어야만 한다.',
     fx: 'pulse',
     options: [
       {
         id: 'A',
-        text: '"이 낯선 세계가 어떻게 작동하는지, 숨겨진 진실과 법칙을 깊이 이해할 수 있는 지적 갈증을 채워줄 고대 기록을 집어 들자."',
+        text: '"구조를 전부 이해하려 들면 늦는다. 손끝의 감각과 직관으로 직접 건드려보며 틈새를 열겠다."',
         whisper: {
-          gain: '세계의 작동 원리를 꿰뚫는 본질적 지적 쾌감',
-          cost: '당장 현실의 위기를 막아줄 물리적 도구의 부재'
+          gain: '신속한 기동성과 상황 적응력',
+          cost: '예기치 못한 돌발 변수에 노출될 위험'
         },
-        weights: { strategic: 3, creativity: 2 },
-        nextTrialId: 't1_6',
-        reactionText: '고대 기록의 문양을 매만지자 세계의 비밀이 가슴 깊이 스며들었다.'
+        temperamentWeights: { intuitive_flow: 3, bold_breakthrough: 2 },
+        nextTrialId: 't1_2',
+        reactionText: '손끝에 전해지는 진동과 흐름을 읽으며 즉각적인 대응 태세를 갖춘다.'
       },
       {
         id: 'B',
-        text: '"추상적인 이야기보다는, 당장 닥쳐올 위험을 막아주고 여정을 안전하고 편하게 만들어 줄 실용적인 특수 도구함을 챙기자."',
+        text: '"함부로 건드려선 안 된다. 겉의 문양과 기어의 맞물림을 분석해 근본 작동 원리부터 규명하겠다."',
         whisper: {
-          gain: '어떤 난관도 직접 손으로 해결할 수 있는 실질적 유용성',
-          cost: '근본적인 메커니즘을 파악하는 지적 시야의 축소'
+          gain: '오차 없는 본질 파악과 안정성',
+          cost: '사유와 분석에 소모되는 시간의 지연'
         },
-        weights: { execution: 3, strategic: 2 },
-        nextTrialId: 't1_6',
-        reactionText: '묵직한 도구함을 품에 안자 당장 무엇이든 풀어낼 든든함이 솟았다.'
+        temperamentWeights: { cognitive_depth: 3, prudent_refine: 2 },
+        nextTrialId: 't1_2',
+        reactionText: '소음을 끄고 기둥에 새겨진 인과관계의 뼈대를 집요하게 응시한다.'
       }
     ]
   },
 
-  // ⚔️ Scene 06: 무너지는 유적과 카운트다운 (시스템적 통제 vs 감각적 임기응변)
-  't1_6': {
-    id: 't1_6',
+  t1_2: {
+    id: 't1_2',
     step: 1,
-    stepTitle: 'STEP 1: 근본 기질 (Core Temperament)',
-    trialNumber: 6,
-    chapterTitle: '제6막: 무너지는 천장과 톱니 함정',
+    stepTitle: '1단계: 근본 기질 규명',
+    trialNumber: 2,
+    chapterTitle: '고립된 등대 (에너지의 원천)',
     backgroundScene:
-      '제단의 보물을 챙겨 들자마자 쿵 하는 굉음과 함께 동굴 천장이 흔들리며 입구가 무너지기 시작합니다! 탈출할 수 있는 시간은 단 수십 초. 바닥에는 복잡한 톱니 함정이 작동하기 시작했습니다.',
-    fx: 'shake',
-    options: [
-      {
-        id: 'A',
-        text: '"서두르면 끝장이다. 호흡을 가다듬고 방금 얻은 지혜와 수단을 발휘해 톱니 함정의 핵심 부품을 순서대로 멈춰 세워 안전한 탈출로를 확보하자."',
-        whisper: {
-          gain: '냉철한 이성을 바탕으로 한 확실하고 안전한 통제',
-          cost: '찰나의 지체로 탈출 시간이 촉박해지는 위험'
-        },
-        weights: { strategic: 3, resilience: 2 },
-        nextTrialId: 't1_7',
-        reactionText: '심호흡과 함께 침착하게 핵심 부품을 단단히 멈춰 세웠다.'
-      },
-      {
-        id: 'B',
-        text: '"장치를 멈출 시간이 없다! 떨어지는 돌과 톱니를 동물적인 감각으로 피하며 온몸을 던져 입구 틈새로 미끄러져 나가자."',
-        whisper: {
-          gain: '찰나의 순간 몸을 살려내는 기민한 반사 신경',
-          cost: '거친 낙하물에 스치며 겪는 생채기와 위험'
-        },
-        weights: { execution: 3, resilience: 2 },
-        nextTrialId: 't1_7',
-        reactionText: '온몸을 날려 낙하물을 아슬아슬하게 피하며 틈새로 굴러 나왔다.'
-      }
-    ]
-  },
-
-  // ⚔️ Scene 07: 안개 낀 거대한 호수 (안전 우회 vs 즉석 도하)
-  't1_7': {
-    id: 't1_7',
-    step: 1,
-    stepTitle: 'STEP 1: 근본 기질 (Core Temperament)',
-    trialNumber: 7,
-    chapterTitle: '제7막: 안개 자욱한 호수',
-    backgroundScene:
-      '간발의 차로 무너지는 입구 틈새를 굴러 빠져나왔습니다. 뒤편에서 굉음과 함께 동굴이 완전히 매몰됩니다. 거친 숨을 몰아쉬며 고개를 드니, 눈앞에 짙은 안개로 둘러싸인 거대한 호수가 펼쳐져 있습니다. 호수 건너편에는 희미하게 탑의 불빛이 보이지만, 배도 다리도 보이지 않습니다.',
+      '끝없는 폭풍 속에서 정신적 에너지가 바닥났다. 더 이상의 판단을 내리기 위해선 영혼의 배터리를 다시 채워 넣어야 한다. 두 개의 공간이 눈앞에 나타난다.',
     fx: 'none',
     options: [
       {
         id: 'A',
-        text: '"이 안개 속을 헤엄치거나 뗏목을 만들어 무작정 건너는 건 무모하다. 호숫가를 따라 걸으며 다른 우회로나 건널 수 있는 얕은 여울을 차분히 찾아보자."',
+        text: '"모든 문을 걸어 잠그고 홀로 침묵 속에 잠기겠다. 외부 소음이 완벽히 차단될 때 비로소 내가 복원된다."',
         whisper: {
-          gain: '예상치 못한 수중 위험을 완벽히 차단하는 안전성',
-          cost: '호숫가를 돌아가는 데 드는 시간과 체력 소모'
+          gain: '흔들리지 않는 내면의 순도와 깊은 사유',
+          cost: '외부 시각과의 단절 및 고립감'
         },
-        weights: { strategic: 3, resilience: 2 },
-        nextTrialId: 't1_8',
-        reactionText: '차분하게 호숫가 갈대숲을 따라 발걸음을 옮기며 안전한 길을 모색했다.'
+        temperamentWeights: { autonomous_focus: 4 },
+        nextTrialId: 't1_3',
+        reactionText: '문이 닫히자 고요한 심연 속에서 흩어졌던 나의 조각들이 제자리를 찾는다.'
       },
       {
         id: 'B',
-        text: '"호수가 얼마나 넓은지 알 수 없는데 빙 돌아가다간 날이 저문다. 부서진 통나무와 덩굴을 엮어 즉석 뗏목을 만들고 곧바로 호수를 가로질러 건너가자."',
+        text: '"뜻이 통하는 이들과 모닥불 앞에 마주 앉겠다. 치열한 문답과 대화의 불꽃 속에서 다시 생명력을 얻는다."',
         whisper: {
-          gain: '목표를 향해 가장 빠르게 직선으로 도달하는 추진력',
-          cost: '안개 속 깊은 물에서 마주칠 급류나 암초의 위험'
+          gain: '다양한 관점의 화학 작용과 생동감',
+          cost: '타인의 감정선과 리듬에 맞추는 피로도'
         },
-        weights: { execution: 3, creativity: 2 },
-        nextTrialId: 't1_8',
-        reactionText: '주변 통나무를 덩굴로 동여매고 거침없이 수면 위로 띄웠다.'
+        temperamentWeights: { relational_spark: 4 },
+        nextTrialId: 't1_3',
+        reactionText: '주고받는 눈빛과 언어 속에서 얼어붙었던 영혼에 온기가 돈다.'
       }
     ]
   },
 
-  // ⚔️ Scene 08: 녹슨 수문과 도르래 (원리 정석 복원 vs 파괴적 돌파)
-  't1_8': {
-    id: 't1_8',
+  t1_3: {
+    id: 't1_3',
     step: 1,
-    stepTitle: 'STEP 1: 근본 기질 (Core Temperament)',
-    trialNumber: 8,
-    chapterTitle: '제8막: 녹슨 수문과 도르래 장치',
+    stepTitle: '1단계: 근본 기질 규명',
+    trialNumber: 3,
+    chapterTitle: '차가운 저울 (판단의 나침반)',
     backgroundScene:
-      '자욱한 갈대밭을 헤치며 호숫가를 따라 한참을 걷던 중, 호수의 물을 가두고 있는 오래된 수문과 거대한 도르래 장치를 발견했습니다. 이 수문만 열어 물을 빼낸다면 바닥이 드러나 걸어서 호수 건너편 탑으로 갈 수 있습니다. 하지만 도르래 장치는 세월의 무게로 뻑뻑하게 녹슬어 굳어 있습니다.',
-    fx: 'none',
-    options: [
-      {
-        id: 'A',
-        text: '"녹슨 부품들의 결합 구조와 작동 원리를 하나씩 살피고 균형을 맞춰가며, 원래 만들어진 방식대로 부드럽게 수문을 들어 올리자."',
-        whisper: {
-          gain: '장치의 본래 설계를 살려내는 완성도 높은 해결',
-          cost: '녹을 닦아내고 균형을 맞추는 섬세한 손길과 시간'
-        },
-        weights: { strategic: 3, execution: 2 },
-        nextTrialId: 't1_9',
-        reactionText: '설계 원리를 헤아려 부품의 균형을 맞추자 굳었던 도르래가 스르륵 풀려 돌았다.'
-      },
-      {
-        id: 'B',
-        text: '"언제 하나하나 뜯어서 기름칠하고 있겠어. 지지대의 가장 약한 이음매에 쐐기를 박고 도구로 강하게 비틀어 부수면 단숨에 물이 빠져나갈 거야."',
-        whisper: {
-          gain: '복잡한 과정을 단숨에 건너뛰는 파격적인 시간 단축',
-          cost: '장치 파손으로 인해 수문이 완전히 닫히지 않을 위험'
-        },
-        weights: { execution: 3, creativity: 2 },
-        nextTrialId: 't1_9',
-        reactionText: '이음매를 강하게 내리치자 굉음과 함께 수문이 단숨에 터져 열렸다.'
-      }
-    ]
-  },
-
-  // ⚔️ Scene 09: 탑 철문 앞 쓰러진 여행자 (인간 구호 vs 과업 실행)
-  't1_9': {
-    id: 't1_9',
-    step: 1,
-    stepTitle: 'STEP 1: 근본 기질 (Core Temperament)',
-    trialNumber: 9,
-    chapterTitle: '제9막: 탑 문 앞의 쓰러진 자',
-    backgroundScene:
-      '수문이 열리고 호수의 물이 빠져나가자 드러난 진흙길을 걸어, 마침내 호수 건너편 신비로운 석탑 입구에 도착했습니다. 그런데 굳게 닫힌 탑의 철문 바로 앞에, 지치고 탈진해 쓰러져 있는 한 여행자가 보입니다. 그의 손에는 탑의 문을 열 수 있는 열쇠가 쥐어져 있습니다.',
-    fx: 'none',
-    options: [
-      {
-        id: 'A',
-        text: '"많이 위태로워 보인다. 문을 여는 건 그다음이다. 먼저 내 물과 비상 식량을 나눠주고 숨을 고를 수 있게 도와주자."',
-        whisper: {
-          gain: '동료의 생명을 살리고 형성되는 깊은 신뢰와 유대',
-          cost: '내 비축 물자 소모와 탑 진입의 일시적 지체'
-        },
-        weights: { collaboration: 3, resilience: 2 },
-        nextTrialId: 't1_10',
-        reactionText: '물병을 열어 여행자의 입술을 적셔주자 희미하게 숨이 돌아왔다.'
-      },
-      {
-        id: 'B',
-        text: '"시간을 지체할 수 없다. 일단 손에 쥔 열쇠를 조심스럽게 건네받아 문부터 열고, 안쪽의 안전한 장소로 이 사람을 데리고 들어가자."',
-        whisper: {
-          gain: '목표 달성과 생존을 동시에 노리는 신속한 효율성',
-          cost: '위급한 상황에서 다소 냉정해 보일 수 있는 우선순위'
-        },
-        weights: { execution: 3, strategic: 2 },
-        nextTrialId: 't1_10',
-        reactionText: '열쇠를 받아 묵직한 철문을 돌려 열고 즉시 안으로 몸을 들였다.'
-      }
-    ]
-  },
-
-  // ⚔️ Scene 10: 탑의 수직 통로 (확실한 돌계단 vs 빠른 도르래 승강기)
-  't1_10': {
-    id: 't1_10',
-    step: 1,
-    stepTitle: 'STEP 1: 근본 기질 (Core Temperament)',
-    trialNumber: 10,
-    chapterTitle: '제10막: 꼭대기로 향하는 두 가지 길',
-    backgroundScene:
-      '건네준 물과 식량 덕분에 기운을 차린 여행자가 깊이 감사해하며, 품에 쥐고 있던 열쇠로 마침내 탑의 거대한 철문을 열어주었습니다. 안으로 들어서자 끝이 보이지 않는 높은 천장 아래, 탑의 꼭대기로 향하는 두 가지 방법이 보입니다. 하나는 벽을 따라 튼튼하게 놓인 \'돌계단\'이고, 다른 하나는 굵은 쇠줄에 매달린 채 위아래로 움직이는 \'고대 도르래 승강기\'입니다.',
-    fx: 'none',
-    options: [
-      {
-        id: 'A',
-        text: '"승강기는 줄이 끊어지거나 고장 나면 끝장이다. 숨이 차고 시간이 걸리더라도, 내 두 발로 확실하게 딛고 올라갈 수 있는 돌계단으로 가자."',
-        whisper: {
-          gain: '내 몸과 호흡으로 직접 통제하는 절대적 확실성',
-          cost: '수백 개의 돌계단을 오르며 감당해야 하는 육체적 피로'
-        },
-        weights: { resilience: 3, strategic: 2 },
-        nextTrialId: 't1_11',
-        reactionText: '돌계단에 굳건히 발을 딛으며 한 걸음씩 흔들림 없이 올랐다.'
-      },
-      {
-        id: 'B',
-        text: '"수십 층을 걸어 올라가다간 정상에 닿기도 전에 지친다. 위험 부담이 조금 있더라도, 도르래 승강기의 손잡이를 당겨 단숨에 위로 솟구치자."',
-        whisper: {
-          gain: '도구의 힘을 빌려 정점까지 수직으로 단축하는 기동력',
-          cost: '도르래 줄과 기계의 결함 위험에 운명을 맡기는 불안'
-        },
-        weights: { execution: 3, creativity: 2 },
-        nextTrialId: 't1_11',
-        reactionText: '승강기 레버를 힘차게 당기자 바람을 가르며 위로 솟구쳤다.'
-      }
-    ]
-  },
-
-  // ⚔️ Scene 11: 닫혀가는 정상의 문 (골든타임 돌파 vs 완충과 회복)
-  't1_11': {
-    id: 't1_11',
-    step: 1,
-    stepTitle: 'STEP 1: 근본 기질 (Core Temperament)',
-    trialNumber: 11,
-    chapterTitle: '제11막: 닫혀가는 정상의 문',
-    backgroundScene:
-      '수백 개의 가파른 돌계단을 밟고 오르자 숨이 턱 끝까지 차오르고 다리가 무겁게 굳어옵니다. 마침내 탑의 꼭대기를 바로 앞둔 마지막 쉼터에 도착했습니다. 이곳에는 시원하고 맑은 물이 솟아나는 샘터와 푹신한 휴식 의자가 놓여 있지만, 한편으로는 밖에서 어두운 밤안개가 탑을 집어삼키며 정상의 문이 서서히 닫히려는 기운이 느껴집니다.',
+      '중대한 결단의 갈림길에 도달했다. 한쪽은 빈틈없는 논리와 효율의 길이지만 누군가의 가슴을 아프게 할 수 있고, 다른 한쪽은 내면의 철학과 온기가 살아있으나 비효율과 번거로움을 감내해야 한다.',
     fx: 'warning',
     options: [
       {
         id: 'A',
-        text: '"문이 닫히면 모든 게 헛수고다. 여기서 주저앉으면 다시는 못 일어난다. 숨이 턱에 차더라도 이를 악물고 마지막 계단을 향해 단숨에 질주하자."',
+        text: '"감정이나 주관에 휘둘리지 않는다. 인과적 정합성과 시스템의 무결점이 결국 최선의 결과를 만든다."',
         whisper: {
-          gain: '골든타임을 놓치지 않는 불굴의 집중력과 임계점 극복',
-          cost: '에너지 고갈로 인해 정상 도달 직후 겪는 탈진'
+          gain: '감정에 휩쓸리지 않는 냉철한 완결성',
+          cost: '기계적 차가움과 정서적 괴리'
         },
-        weights: { resilience: 3, execution: 3 },
-        nextTrialId: 't1_12',
-        reactionText: '이를 악물고 마지막 힘을 쥐어짜 내어 닫히는 문틈으로 돌진했다.'
+        temperamentWeights: { logical_rigor: 4 },
+        nextTrialId: 't1_4',
+        reactionText: '냉철한 이성의 잣대로 군더더기를 쳐내며 객관적 인과에 집중한다.'
       },
       {
         id: 'B',
-        text: '"탈진한 채로 정상의 문을 넘어가 봤자 다음 시련을 버티지 못한다. 문이 닫히더라도 내 몸이 먼저다. 샘물로 목을 축이고 숨을 완전히 고른 뒤 차분하게 올라가자."',
+        text: '"숫자나 효율이 전부가 아니다. 내가 지키고자 하는 존재의 존엄성과 내면의 진정성이 가장 앞서야 한다."',
         whisper: {
-          gain: '자신의 상태를 지키는 온전한 회복과 내적 평정심',
-          cost: '정상의 문이 닫혀 새로운 우회 통로를 개척해야 하는 수고'
+          gain: '양심과 철학이 담긴 고결한 진정성',
+          cost: '논리적 예외 상황과 비효율의 무게'
         },
-        weights: { strategic: 2, resilience: 3 },
-        nextTrialId: 't1_12',
-        reactionText: '샘물로 목을 축이고 숨을 가다듬으며 다음 발걸음을 준비했다.'
+        temperamentWeights: { value_driven: 4 },
+        nextTrialId: 't1_4',
+        reactionText: '가슴 깊은 곳의 맥박을 짚으며 타협할 수 없는 가치에 손을 얹는다.'
       }
     ]
   },
 
-  // ⚔️ Scene 12: 천공의 제단 (궁극적 지향과 나침반)
-  't1_12': {
-    id: 't1_12',
+  t1_4: {
+    id: 't1_4',
     step: 1,
-    stepTitle: 'STEP 1: 근본 기질 (Core Temperament)',
-    trialNumber: 12,
-    chapterTitle: '제12막: 천공의 제단과 진실의 수정구',
+    stepTitle: '1단계: 근본 기질 규명',
+    trialNumber: 4,
+    chapterTitle: '벼랑 끝의 도약 (위기 반응과 저항선)',
     backgroundScene:
-      '닫히기 직전의 문틈으로 몸을 던져, 마침내 탑의 꼭대기 하늘이 탁 트인 천공의 제단에 섰습니다. 시원한 바람이 땀을 식혀주고, 제단 중앙에는 당신이 겪어온 모든 여정과 기질을 투영하는 신비로운 \'진실의 수정구\'가 빛을 발하고 있습니다. 그 수정구는 당신이 이 험난한 여정을 거쳐 궁극적으로 도달하고 싶은 삶의 형태를 묻고 있습니다.',
+      '벼랑 끝에서 거센 비바람이 몰아친다. 건너편 땅은 보이지만 다리는 끊겼다. 밧줄을 걸고 지금 당장 뛰어넘어야 할지, 아니면 비바람이 잦아들 때까지 안전한 지지대를 쌓고 기다려야 할지 선택해야 한다.',
+    fx: 'shake',
+    options: [
+      {
+        id: 'A',
+        text: '"100%의 안전은 환상이다. 60%의 확신만 있다면 허공을 향해 몸을 던져 길을 만들어내겠다."',
+        whisper: {
+          gain: '압도적인 기동성과 판을 바꾸는 돌파력',
+          cost: '추락의 위험과 높은 스트레스 비용'
+        },
+        temperamentWeights: { bold_breakthrough: 4 },
+        nextTrialId: 't1_5',
+        reactionText: '심장이 요동치지만 지체 없이 도약의 반동을 싣는다.'
+      },
+      {
+        id: 'B',
+        text: '"모험으로 운을 시험하지 않는다. 지형을 측량하고 튼튼한 와이어를 고정한 뒤 한 걸음씩 건너겠다."',
+        whisper: {
+          gain: '확실한 안전 마진과 정밀한 통제력',
+          cost: '타이밍의 상실과 과도한 신중함'
+        },
+        temperamentWeights: { prudent_refine: 4 },
+        nextTrialId: 't1_5',
+        reactionText: '호흡을 고르고 쐐기를 깊게 박아 넣으며 오차 범위를 0으로 수렴시킨다.'
+      }
+    ]
+  },
+
+  t1_5: {
+    id: 't1_5',
+    step: 1,
+    stepTitle: '1단계: 근본 기질 규명',
+    trialNumber: 5,
+    chapterTitle: '심연의 거울 (본질 탐구와 매듭)',
+    backgroundScene:
+      '회랑의 가장 깊은 성소에 도달했다. 거울에 비친 자신의 눈동자를 들여다본다. 당신이 세상을 이해하고 몰입할 때, 가장 본질적으로 쾌감을 느끼는 순간은 언제인가?',
     fx: 'pulse',
     options: [
       {
         id: 'A',
-        text: '"어떤 거센 폭풍우와 세상의 혼란이 닥쳐와도, 내 힘으로 지켜낼 수 있는 완벽하고 흔들림 없는 \'나만의 단단한 보금자리와 터전\'을 완성하는 것."',
+        text: '"현상의 껍데기 아래 숨겨진 \'원리와 법칙\'을 명쾌하게 규명하고 나만의 체계로 세울 때."',
         whisper: {
-          gain: '누구에게도 침범받지 않는 안전하고 영속적인 자율 영역',
-          cost: '새로운 외부 세계에 대한 모험과 확장의 절제'
+          gain: '세상을 꿰뚫는 본질적 통찰과 구조화',
+          cost: '추상적 개념에 매몰되어 현실 감각이 무뎌질 위험'
         },
-        weights: { strategic: 3, resilience: 3 },
+        temperamentWeights: { cognitive_depth: 3, autonomous_focus: 2 },
         nextTrialId: 'UNLOCK_STEP2',
-        reactionText: '수정구에서 뿜어져 나온 푸른빛이 흔들리지 않는 견고한 성채의 상을 띄웠다.'
+        reactionText: '내면 깊은 곳에서 복잡한 세상의 암호가 풀리는 전율을 느낀다.'
       },
       {
         id: 'B',
-        text: '"안주하지 않고 안개 너머의 미지의 세계를 향해 지평선을 끊임없이 넓혀나가는 \'영원한 탐험가이자 개척자\'로 살아가는 것."',
+        text: '"순간의 영감과 느낌을 포착하여 살아있는 감각적 리듬으로 즉시 변주하고 표현해낼 때."',
         whisper: {
-          gain: '끝없는 성장과 새로운 지평을 열어젖히는 가슴 뛰는 자유',
-          cost: '정착되지 않은 불안정함과 끊임없이 감수해야 할 변화'
+          gain: '생동감 넘치는 창의성과 유연한 변주',
+          cost: '지속적인 구조적 체계 유지의 번거로움'
         },
-        weights: { creativity: 3, execution: 3 },
+        temperamentWeights: { intuitive_flow: 3, relational_spark: 2 },
         nextTrialId: 'UNLOCK_STEP2',
-        reactionText: '수정구가 황금빛으로 물들며 끝없는 지평선의 궤적을 비췄다.'
+        reactionText: '정형화된 틀을 깨고 자유로운 리듬 속으로 의식이 헤엄친다.'
       }
     ]
   }
 };
 
-export function determineStep1Profile(scores: Record<CompassDimension, number>): StepProfile {
-  // Sir의 시그니처: 전략적 분석 + 높은 지속성/독자생존 ➔ 흔들리지 않는 요새 구축가
-  if (scores.strategic >= 10 && scores.resilience >= 10) {
+export function determineTemperamentProfile(
+  scores: Partial<Record<TemperamentDimension, number>>
+): TemperamentProfile {
+  const cog = (scores.cognitive_depth || 0) >= (scores.intuitive_flow || 0) ? 'deep' : 'flow';
+  const eng = (scores.autonomous_focus || 0) >= (scores.relational_spark || 0) ? 'solo' : 'social';
+  const jud = (scores.logical_rigor || 0) >= (scores.value_driven || 0) ? 'logic' : 'value';
+  const crs = (scores.bold_breakthrough || 0) >= (scores.prudent_refine || 0) ? 'bold' : 'prudent';
+
+  // 16가지 조합 중 대표 아키타입 매핑
+  if (cog === 'deep' && eng === 'solo' && jud === 'logic') {
     return {
-      step: 1,
-      stepName: 'STEP 1: 근본 기질 (Core Temperament)',
-      archetypeTitle: '흔들리지 않는 요새 구축가',
-      englishTitle: 'The Pragmatic Architect',
+      title: '심연의 원리를 꿰뚫는 구조적 아키텍트',
+      epithet: '소음 속에서 보이지 않는 본질의 뼈대를 세우고 고독 속에서 완전성을 빚는 사유자',
       coreTraits: [
-        '현실의 단서와 팩트를 먼저 읽는 냉철한 관찰력',
-        '불필요한 소모전을 피하고 실리적인 샛길을 찾는 지혜',
-        '추상적인 이론보다 손에 잡히는 실용 도구와 완성도 중시',
-        '결정적 마감 앞에선 임계점을 돌파하며 나만의 단단한 터전 구축'
+        '본질 지향성: 현상의 겉핥기를 질색하며, "왜 그런가"의 근본 인과를 끝까지 파고듭니다.',
+        '자율적 고독: 혼자만의 침묵 속에서 사유할 때 에너지가 폭발적으로 회복됩니다.',
+        '체계적 무결점: 주먹구구식 임기응변보다 한 번의 깔끔한 시스템 설계를 지향합니다.',
+        crs === 'bold' ? '결단적 돌파: 철저한 사유 끝에 확신이 서면 주저 없이 판을 뒤흔듭니다.' : '정밀한 마진: 오차를 허용하지 않는 치밀한 안정성을 구축합니다.'
       ],
-      summary:
-        '들뜨지 않고 현실의 팩트와 흐름을 먼저 읽으며, 불필요한 고집 대신 기민하고 유연한 우회로를 찾아냅니다. 쓸데없는 군더더기를 배제한 실질적 도구와 완성도를 무기로 삼으며, 결정적 순간에는 온몸을 던져 임계점을 돌파해 누구에게도 흔들리지 않는 견고한 삶의 터전을 일궈냅니다.'
+      deepEngine: '세상의 혼돈을 나만의 명쾌한 지적 모델과 자율적 시스템으로 환원하는 지적 쾌감',
+      shadowPoint: '타인의 비논리적 주장이나 반복적인 비효율을 마주할 때 급격한 정신적 피로를 느낌',
+      energyRecharge: '방해받지 않는 독립된 공간에서 깊은 사유와 개인적 연구에 몰입할 때'
     };
   }
 
-  if (scores.strategic >= scores.execution && scores.strategic >= scores.creativity) {
+  if (cog === 'deep' && eng === 'solo' && jud === 'value') {
     return {
-      step: 1,
-      stepName: 'STEP 1: 근본 기질 (Core Temperament)',
-      archetypeTitle: '본질을 꿰뚫는 분석적 탐구자',
-      englishTitle: 'The Analytic Deep-Diver',
+      title: '영혼의 진정성을 빚는 고요한 철학자',
+      epithet: '시대의 유행에 휩쓸리지 않고, 내면의 신념과 깊은 사유로 고유한 세계를 축조하는 탐도자',
       coreTraits: [
-        '현상 이면에 숨겨진 본질적 원리와 구조 분석',
-        '피상적인 유행보다 변하지 않는 근본 팩트 선호',
-        '인과관계가 명확할 때 터져 나오는 깊은 집중력',
-        '혼란 속에서도 전체의 뼈대를 차분히 완성하는 힘'
+        '내적 진정성: 숫자의 크기보다 "이것이 내 영혼에 진실한가"를 최우선으로 묻습니다.',
+        '독립적 심연: 다수의 의견에 편승하지 않고 오롯이 스스로 납득할 때까지 사유합니다.',
+        '통찰적 깊이: 인간과 사물의 이면에 깃든 고유한 가치와 서사를 읽어냅니다.',
+        crs === 'bold' ? '신념적 결단: 확신이 들면 주변의 만류에도 독자적인 길을 개척합니다.' : '신중한 수호: 소중한 가치를 훼손하지 않기 위해 한 걸음씩 깊이 있게 전진합니다.'
       ],
-      summary:
-        '겉으로 드러난 현상에 일희일비하지 않고, 문제의 근원과 사물의 작동 원리를 끝까지 파고듭니다. 탄탄한 팩트와 논리적 구조를 기반으로 흔들리지 않는 지식의 초석을 세우는 진정한 탐구형 기질입니다.'
-    };
-  } else if (scores.execution >= scores.creativity) {
-    return {
-      step: 1,
-      stepName: 'STEP 1: 근본 기질 (Core Temperament)',
-      archetypeTitle: '쓸모 있는 실체를 빚는 실용적 구축가',
-      englishTitle: 'The Pragmatic Builder',
-      coreTraits: [
-        '불필요한 군더더기를 쳐내는 실용 완결주의',
-        '손에 잡히는 도구와 명확한 결과물 중심의 사고',
-        '복잡한 이론을 현장에서 즉각 쓸 수 있는 해법으로 전환',
-        '지체 없는 실행과 빠른 가시적 피드백 추구'
-      ],
-      summary:
-        '공허한 탁상공론이나 과도한 완벽주의의 늪에 빠지지 않습니다. 당장 손에 쥘 수 있는 실체와 작동하는 도구를 빠르게 만들어내며, 현실의 문제를 가장 깔끔하고 단호하게 해결하는 실전형 구축가입니다.'
-    };
-  } else if (scores.creativity >= scores.collaboration) {
-    return {
-      step: 1,
-      stepName: 'STEP 1: 근본 기질 (Core Temperament)',
-      archetypeTitle: '직관으로 길을 여는 감각적 개척가',
-      englishTitle: 'The Intuitive Trailblazer',
-      coreTraits: [
-        '기존의 뻔한 방식을 깨뜨리는 신선한 발상',
-        '새로운 자극과 가능성을 마주할 때 솟구치는 호기심',
-        '정형화된 틀을 벗어나 독창적인 형태를 빚어내는 창작력',
-        '위기 상황에서도 유연하게 우회로를 뚫어내는 임기응변'
-      ],
-      summary:
-        '남들이 지나간 뻔한 길을 답습하는 것을 거부합니다. 직관적인 감각과 기발한 상상력으로 흩어진 조각들을 새롭게 결합하여, 세상에 없던 독창적인 해법과 경험을 창조해내는 자유로운 탐험가입니다.'
-    };
-  } else {
-    return {
-      step: 1,
-      stepName: 'STEP 1: 근본 기질 (Core Temperament)',
-      archetypeTitle: '마음과 맥락을 짚는 공감형 조율가',
-      englishTitle: 'The Empathetic Synthesizer',
-      coreTraits: [
-        '말 뒤에 숨은 사람들의 미세한 감정과 결핍 포착',
-        '차가운 규칙보다 사람의 존엄성과 온기를 중시',
-        '파편화된 요소들을 유기적으로 엮어내는 통합적 감각',
-        '타인의 숨통을 틔워주고 신뢰를 회복시키는 포용력'
-      ],
-      summary:
-        '단순히 기능적 해결에 그치지 않고, 그 문제를 겪고 있는 사람의 정서와 상황적 맥락을 깊이 헤아립니다. 사람과 사람, 생각과 생각을 따스하게 연결하여 가장 조화롭고 지속 가능한 해법을 도출해냅니다.'
+      deepEngine: '나만의 철학적 신념이 왜곡되지 않고 세상에 정갈한 형태로 실체화되는 순간',
+      shadowPoint: '타협을 강요하는 세속적 압박이나 무의미한 형식주의를 마주할 때 깊은 환멸',
+      energyRecharge: '홀로 고요히 글을 쓰거나 생각을 정리하며 영혼의 중심을 다잡을 때'
     };
   }
+
+  if (cog === 'flow' && eng === 'solo') {
+    return {
+      title: '직관의 불꽃을 다듬는 독립적 크리에이터',
+      epithet: '틀에 갇힌 이론 대신 감각적인 직관으로 현실의 빈틈을 파고드는 감각적 메이커',
+      coreTraits: [
+        '직관적 감각: 복잡한 수치 분석보다 손끝의 감각과 흐름을 통해 답을 찾아냅니다.',
+        '자율적 기동성: 결재나 긴 회의 없이 혼자서 빠르게 시도하고 변주할 때 빛이 납니다.',
+        '창의적 변주: 기존의 규칙을 그대로 따르기보다 의외의 연결고리를 만들어냅니다.',
+        '실질적 결과 지향: 이론적 담론에 머물지 않고 즉시 시각화되거나 체감되는 결과물을 만듭니다.'
+      ],
+      deepEngine: '머릿속에 떠오른 감각적 이미지를 군더더기 없이 현실에 즉시 구현해낼 때',
+      shadowPoint: '경직된 매뉴얼이나 끝없는 문서 작업으로 손발이 묶일 때 질식할 것 같은 답답함',
+      energyRecharge: '자유로운 환경에서 좋아하는 작업물을 만지작거리며 프로토타이핑할 때'
+    };
+  }
+
+  // 기본/공통 프로필
+  return {
+    title: '현실의 돌파구를 찾는 입체적 전략가',
+    epithet: '사유의 깊이와 실행의 감각을 균형 있게 조율하며 복잡한 매듭을 풀어내는 탐색자',
+    coreTraits: [
+      '유연한 균형 감각: 이론에 매몰되지도, 무모한 충동에 휩쓸리지도 않는 입체적 조망',
+      '자율적 추진력: 스스로 목표를 정의하고 최적의 경로를 찾아 나서는 주체성',
+      '본질적 문제해결: 겉으로 드러난 증상이 아닌 진짜 병목을 찾아 효율적으로 해소',
+      '가치와 실용의 조화: 의미 있는 일과 현실적 성과 사이의 교집합을 집요하게 추적'
+    ],
+    deepEngine: '복잡하게 엉킨 현실의 문제를 명쾌한 접근법으로 해결하고 결과를 눈으로 확인할 때',
+    shadowPoint: '명확한 방향성 없이 무의미하게 소모되는 상황에 처했을 때의 무력감',
+    energyRecharge: '스스로 통제권을 가진 프로젝트를 시작하거나 정리된 결과물을 마주할 때'
+  };
 }
