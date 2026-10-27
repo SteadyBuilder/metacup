@@ -2,7 +2,6 @@
 
 import React from 'react';
 import { motion } from 'framer-motion';
-import { Scroll, Compass } from 'lucide-react';
 import { Trial } from '@/types/quest';
 
 interface MudStoryRendererProps {
@@ -21,27 +20,9 @@ export const MudStoryRenderer: React.FC<MudStoryRendererProps> = ({ trial }) => 
       {/* Ambient background decoration */}
       <div className="absolute top-0 right-0 w-64 h-64 bg-cyan-500/5 rounded-full blur-3xl pointer-events-none" />
 
-      {/* Chapter Tag Header */}
-      <div className="flex items-center justify-between pb-4 mb-5 border-b border-slate-800">
-        <div className="flex items-center gap-2 text-cyan-400">
-          <Scroll className="w-4 h-4" />
-          <span className="text-xs font-mono font-semibold tracking-wider uppercase">
-            {trial.stepTitle}
-          </span>
-        </div>
-        <div className="text-xs font-mono text-slate-400">
-          시련 #{trial.trialNumber}
-        </div>
-      </div>
-
-      {/* Chapter Title */}
-      <h2 className="text-xl sm:text-2xl font-bold text-slate-100 font-serif tracking-tight mb-4">
-        {trial.chapterTitle}
-      </h2>
-
       {/* Pure Novel Scene Background Description */}
-      <div className="relative pl-4 border-l-2 border-cyan-500/50">
-        <p className="text-base sm:text-lg text-slate-300 leading-relaxed font-serif whitespace-pre-line">
+      <div className="relative pl-5 sm:pl-6 border-l-2 border-cyan-500/60 py-1">
+        <p className="text-base sm:text-lg text-slate-200 leading-relaxed font-serif whitespace-pre-line tracking-wide">
           {trial.backgroundScene}
         </p>
       </div>
