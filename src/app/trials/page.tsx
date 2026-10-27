@@ -50,11 +50,15 @@ export default function TrialsPage() {
 
   return (
     <FxOverlay fx={activeFx}>
-      <div className="flex-1 flex flex-col justify-between max-w-4xl mx-auto px-4 sm:px-6 py-6 sm:py-10 w-full">
+      <div className="flex-1 flex flex-col justify-start max-w-5xl mx-auto px-4 sm:px-6 py-3 sm:py-5 w-full">
         {/* Top Control Bar: Step Info & 3 Helper UIs */}
-        <div className="flex items-center justify-between gap-4 mb-6">
-          {/* Journey Map & Rewind Controls */}
+        <div className="flex items-center justify-between gap-3 sm:gap-4 mb-3 sm:mb-4">
+          {/* Journey Map & Rewind Controls & Chapter Tag */}
           <div className="flex items-center gap-2">
+            <span className="hidden sm:inline-flex items-center px-2.5 py-1 rounded-xl bg-slate-900/90 border border-slate-700/80 text-cyan-300 text-xs font-mono font-medium">
+              STEP {trial.step} · {trial.chapterTitle}
+            </span>
+
             <button
               onClick={() => setIsMapOpen(true)}
               className="flex items-center gap-1.5 px-3 py-1.5 rounded-xl bg-slate-900 border border-slate-700/80 hover:border-cyan-500/50 text-cyan-300 text-xs font-semibold shadow-sm transition-all"
@@ -88,7 +92,7 @@ export default function TrialsPage() {
               animate={{ opacity: 1, y: 0 }}
               exit={{ opacity: 0 }}
               transition={{ duration: 0.3 }}
-              className="mb-4 px-4 py-2 rounded-xl bg-cyan-950/40 border border-cyan-800/40 text-cyan-200 text-xs sm:text-sm font-serif italic text-center"
+              className="mb-2.5 sm:mb-3 px-3 py-1.5 rounded-xl bg-cyan-950/40 border border-cyan-800/40 text-cyan-200 text-xs sm:text-sm font-serif italic text-center"
             >
               &ldquo;{lastReaction}&rdquo;
             </motion.div>
@@ -96,17 +100,17 @@ export default function TrialsPage() {
         </AnimatePresence>
 
         {/* Main MUD Novel Background Situation */}
-        <div className="mb-6">
+        <div className="mb-3 sm:mb-4">
           <MudStoryRenderer trial={trial} />
         </div>
 
         {/* 1st Person Inner Monologue Choice Cards */}
-        <div className="space-y-3 sm:space-y-4">
-          <div className="text-center text-xs font-mono text-slate-400 uppercase tracking-widest mb-1">
+        <div className="space-y-2 sm:space-y-3">
+          <div className="text-center text-[11px] sm:text-xs font-mono text-slate-400 uppercase tracking-widest mb-1 sm:mb-2">
             당신의 본능적인 결단을 선택하십시오
           </div>
 
-          <div className="grid grid-cols-1 gap-3 sm:gap-4">
+          <div className="grid grid-cols-1 md:grid-cols-2 gap-3 sm:gap-4 items-stretch">
             {trial.options.map((opt, idx) => (
               <MonologueCard
                 key={opt.id}

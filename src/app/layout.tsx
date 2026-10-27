@@ -23,7 +23,7 @@ export default function RootLayout({
       <body className="min-h-full flex flex-col bg-slate-950 text-slate-100 selection:bg-cyan-500/30 selection:text-cyan-200 font-sans">
         <Navbar />
         <main className="flex-1 flex flex-col">{children}</main>
-        <footer className="py-6 border-t border-slate-900 bg-slate-950/80 text-center text-xs text-slate-500">
+        <footer className="py-3 sm:py-4 border-t border-slate-900 bg-slate-950/80 text-center text-xs text-slate-500">
           <p>© {new Date().getFullYear()} 마인드 퀘스트: 내면의 나침반. Developed with JARVIS Persona Engine.</p>
         </footer>
       </body>
