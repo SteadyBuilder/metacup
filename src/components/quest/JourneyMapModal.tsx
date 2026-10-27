@@ -4,7 +4,7 @@ import React from 'react';
 import { motion, AnimatePresence } from 'framer-motion';
 import { Map, RotateCcw, CheckCircle2, ChevronRight, X, Compass } from 'lucide-react';
 import { useQuestStore } from '@/store/useQuestStore';
-import { ALL_TRIALS } from '@/data/story/allTrials';
+import { ALL_TRIALS, getResolvedTrial } from '@/data/story/allTrials';
 
 interface JourneyMapModalProps {
   isOpen: boolean;
@@ -61,7 +61,7 @@ export const JourneyMapModal: React.FC<JourneyMapModalProps> = ({ isOpen, onClos
             {/* Trial Path Timeline */}
             <div className="mt-4 flex-1 overflow-y-auto space-y-3 pr-1">
               {allEncountered.map((tId, idx) => {
-                const trial = ALL_TRIALS[tId];
+                const trial = getResolvedTrial(tId, decisions);
                 if (!trial) return null;
                 const isCurrent = tId === currentTrialId;
                 const decision = decisions[tId];

@@ -5,7 +5,7 @@ import { useRouter } from 'next/navigation';
 import { motion, AnimatePresence } from 'framer-motion';
 import { Compass, RotateCcw, Map, Sparkles, CheckCircle2 } from 'lucide-react';
 import { useQuestStore } from '@/store/useQuestStore';
-import { ALL_TRIALS } from '@/data/story/allTrials';
+import { ALL_TRIALS, getResolvedTrial } from '@/data/story/allTrials';
 import { FxOverlay } from '@/components/quest/FxOverlay';
 import { MudStoryRenderer } from '@/components/quest/MudStoryRenderer';
 import { MonologueCard } from '@/components/quest/MonologueCard';
@@ -19,6 +19,7 @@ export default function TrialsPage() {
   const router = useRouter();
   const {
     currentTrialId,
+    decisions,
     activeFx,
     selectOption,
     isCompleted,
@@ -31,7 +32,7 @@ export default function TrialsPage() {
   const [isMapOpen, setIsMapOpen] = useState(false);
   const [lastReaction, setLastReaction] = useState<string | null>(null);
 
-  const trial = ALL_TRIALS[currentTrialId] || ALL_TRIALS['t1_1'];
+  const trial = getResolvedTrial(currentTrialId, decisions);
 
   // When quest completes, navigate to chronicle
   useEffect(() => {
